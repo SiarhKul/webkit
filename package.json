@@ -5,9 +5,10 @@
     "main": "index.js",
     "scripts": {
         "build": "tsc",
-        "start": "node dist/main.js",
+        "start": "ts-node src/index.ts",
         "dev": "tsx src/main.ts",
-        "prepare": "husky"
+        "prepare": "husky",
+        "typeorm": "typeorm-ts-node-commonjs"
     },
     "keywords": [],
     "author": "",
@@ -15,17 +16,18 @@
     "dependencies": {
         "express": "^5.1.0",
         "reflect-metadata": "^0.2.2",
-        "typeorm": "^0.3.27"
+        "typeorm": "0.3.27",
+        "pg": "^8.14.1"
     },
     "devDependencies": {
-        "@types/express": "^5.0.3",
         "@types/node": "^24.9.1",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.9.3",
+        "@types/express": "^5.0.3",
         "husky": "^9.1.7",
         "lint-staged": "^16.2.6",
         "prettier": "3.6.2",
-        "ts-node": "^10.9.2",
-        "tsx": "^4.20.6",
-        "typescript": "^5.9.3"
+        "tsx": "^4.20.6"
     },
     "repository": {
         "type": "git",
