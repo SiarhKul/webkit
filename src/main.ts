@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import express, { type Application } from 'express'
 import { employeeRouter } from './routes/employee.js'
 
