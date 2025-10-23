@@ -1,10 +1,10 @@
 import express, { type Application } from 'express'
-import usersRouter from './routes/users.js'
+import { employeeRouter } from './routes/employee.js'
 
 const app: Application = express()
 const port = 3001
 
-app.use(usersRouter)
+app.use(employeeRouter)
 
 app.listen(port, () => {
     console.log(`Listening port is ${port}`)

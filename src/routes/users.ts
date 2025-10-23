@@ -1,8 +1,0 @@
-import express, { type Router } from 'express'
-import EmployController from '../controllers/EmployController.js'
-
-const router: Router = express.Router()
-
-router.get('/', EmployController.getAllUsers)
-
-export default router
