@@ -5,12 +5,12 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column()
+    @Column({ type: 'varchar', length: 255 })
     firstName: string
 
-    @Column()
+    @Column({ type: 'varchar', length: 255 })
     lastName: string
 
-    @Column()
+    @Column({ type: 'int' })
     age: number
 }
