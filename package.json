@@ -1,11 +1,12 @@
 {
     "name": "webkit",
     "version": "1.0.0",
+    "type": "module",
     "main": "index.js",
     "scripts": {
         "build": "tsc",
         "start": "node dist/main.js",
-        "dev": "ts-node src/main.ts",
+        "dev": "tsx src/main.ts",
         "prepare": "husky"
     },
     "keywords": [],

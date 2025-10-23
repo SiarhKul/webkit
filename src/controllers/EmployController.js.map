@@ -1,0 +1,1 @@
+{"version":3,"file":"EmployController.js","sourceRoot":"","sources":["EmployController.ts"],"names":[],"mappings":"AACA,OAAO,eAAe,MAAM,gCAAgC,CAAA;AAE5D,MAAM,gBAAgB;IAClB,MAAM,CAAC,WAAW,GAAG,KAAK,EAAE,GAAY,EAAE,GAAa,EAAE,EAAE;QACvD,MAAM,IAAI,GAAG,eAAe,CAAC,eAAe,EAAE,CAAA;QAC9C,GAAG,CAAC,IAAI,CAAC,IAAI,CAAC,CAAA;IAClB,CAAC,CAAA;;AAGL,eAAe,gBAAgB,CAAA"}
