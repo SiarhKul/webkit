@@ -13,4 +13,12 @@ export class User {
 
     @Column({ type: 'int' })
     age: number
+
+    @Column({
+        type: 'varchar',
+        length: 255,
+        unique: true,
+        nullable: false,
+    })
+    email: string
 }

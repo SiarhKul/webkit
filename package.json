@@ -1,14 +1,17 @@
 {
     "name": "webkit",
     "version": "1.0.0",
-    "type": "module",
+    "type": "commonjs",
     "main": "main.js",
     "scripts": {
         "build": "tsc",
         "start": "tsx src/main.ts",
         "dev": "tsx src/main.ts",
         "prepare": "husky",
-        "typeorm": "typeorm-ts-node-commonjs"
+        "typeorm": "typeorm-ts-node-commonjs",
+        "migration:generate": "npm run typeorm -- migration:generate -d src/integrations/data-source.ts",
+        "migration:run": "npm run typeorm -- migration:run -d src/integrations/data-source.ts",
+        "migration:revert": "npm run typeorm -- migration:revert -d src/integrations/data-source.ts"
     },
     "keywords": [],
     "author": "",

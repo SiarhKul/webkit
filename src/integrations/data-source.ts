@@ -8,7 +8,7 @@ const {
     DB_PASSWORD = 'password',
     DB_NAME = 'db-webkit',
     DB_LOGGING = 'false',
-    DB_SYNCHRONIZE = 'true',
+    DB_SYNCHRONIZE = 'false',
 } = process.env
 
 export const AppDataSource = new DataSource({
@@ -21,6 +21,6 @@ export const AppDataSource = new DataSource({
     synchronize: DB_SYNCHRONIZE === 'true',
     logging: DB_LOGGING === 'true',
     entities: [User],
-    migrations: [],
+    migrations: ['src/migration/*.ts'],
     subscribers: [],
 })
