@@ -1,6 +1,5 @@
-import 'reflect-metadata'
 import { DataSource } from 'typeorm'
-import { User } from './entity/User'
+import { User } from '../entity/User'
 
 const {
     DB_HOST = 'localhost',
