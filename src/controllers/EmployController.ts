@@ -1,11 +1,9 @@
 import type { Request, Response } from 'express'
 import EmployeeService from '../services/EmployeeService.js'
 
-class EmployController {
-    static getAllUsers = async (req: Request, res: Response) => {
+export class EmployController {
+    static getAllEmployees = async (req: Request, res: Response) => {
         const empl = EmployeeService.getAllEmployees()
         res.json(empl)
     }
 }
-
-export default EmployController

@@ -1,8 +1,8 @@
-import express, { type Router } from 'express'
-import EmployController from '../controllers/EmployController.js'
+import express from 'express'
+import { EmployController } from '../controllers/EmployController.js'
 
-const employeeRouter: Router = express.Router()
+const employeeRouter = express.Router()
 
-employeeRouter.get('/', EmployController.getAllUsers)
+employeeRouter.get('/', EmployController.getAllEmployees)
 
 export { employeeRouter }
