@@ -6,7 +6,7 @@
     "scripts": {
         "build": "tsc",
         "start": "tsx src/main.ts",
-        "dev": "tsx src/main.ts",
+        "dev": "tsx watch src/main.ts",
         "prepare": "husky",
         "typeorm": "typeorm-ts-node-commonjs",
         "migration:generate": "npm run typeorm -- migration:generate -d src/integrations/data-source.ts",
