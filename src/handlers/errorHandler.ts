@@ -10,10 +10,9 @@ export const errorHandler = (
     console.log(err)
     return res.status(500).json(
         new ErrorResponse({
-            code: 'UNKNOWN Errros',
-            name: 'name',
-            data: {},
-            message: 'message',
+            type: 'UNKNOWN ERROR',
+            name: 'Unknown error',
+            message: 'The services handled an unknown error',
         })
     )
 }
