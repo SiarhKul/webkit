@@ -7,11 +7,13 @@ export const errorHandler = (
     res: Response,
     next: NextFunction
 ) => {
+    console.log(err)
     return res.status(500).json(
         new ErrorResponse({
-            code: 1,
-            name: 'Internal Server Error',
-            message: 'An unknown and unexpected error occurred.',
+            code: 'UNKNOWN Errros',
+            name: 'name',
+            data: {},
+            message: 'message',
         })
     )
 }

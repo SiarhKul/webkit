@@ -3,22 +3,21 @@ export class ErrorResponse<T extends Record<string, unknown>> {
     error: {
         name: string
         message: string
-        code: number
+        code: string
         data?: unknown
     }
 
     constructor(options: {
         name: string
         message: string
-        code: number
+        code: string
         data?: T
     }) {
-        this.error.name = options.name
-        this.error.message = options.message
-        this.error.code = options.code
-
-        if (options.data) {
-            this.error.data = options.data
+        this.error = {
+            name: options.name,
+            message: options.message,
+            code: options.code,
+            data: options.data,
         }
     }
 }
