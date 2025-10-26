@@ -1,7 +1,7 @@
 import EmployeeRepository from '../repositories/EmployeeRepository.js'
 
 class EmployeeService {
-    static getAllEmployees() {
+    static async getAllEmployees() {
         return EmployeeRepository.getAllEmployees()
     }
 }
