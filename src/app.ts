@@ -11,6 +11,7 @@ app.use(bodyParser.json())
 
 app.use(employeeRouter)
 app.use(userRouter)
+
 app.use(errorHandler)
 
 export { app, port }

@@ -1,6 +1,5 @@
+import { type Request, type Response, type NextFunction } from 'express'
 import { ErrorResponse } from '../sharable/jsend/ErrorResponse'
-
-export type { Request, Response, NextFunction } from 'express'
 
 export const errorHandler = (
     err: unknown,
@@ -8,7 +7,11 @@ export const errorHandler = (
     res: Response,
     next: NextFunction
 ) => {
-    res.status(500).json(
-        new ErrorResponse({ errorMessage: 'Something went wrong' })
+    return res.status(500).json(
+        new ErrorResponse({
+            code: 1,
+            name: 'Internal Server Error',
+            message: 'An unknown and unexpected error occurred.',
+        })
     )
 }
