@@ -4,30 +4,30 @@ import { AppError } from '../sharable/AppError'
 import { ErrorCodes } from '../sharable/jsend/ErrorCodes'
 
 export const errorHandler = (
-    err: unknown,
-    req: Request,
-    res: Response,
-    next: NextFunction
+  err: unknown,
+  req: Request,
+  res: Response,
+  next: NextFunction
 ) => {
-    console.log(err)
+  console.log(err)
 
-    if (err instanceof AppError) {
-        if (err.code === ErrorCodes.VALIDATION_ERROR) {
-            return res.status(err.statusCode).json(
-                new ErrorResponse({
-                    code: err.code,
-                    name: 'Validation Error',
-                    message: err.message,
-                })
-            )
-        }
-    }
-
-    return res.status(500).json(
+  if (err instanceof AppError) {
+    if (err.code === ErrorCodes.VALIDATION_ERROR) {
+      return res.status(err.statusCode).json(
         new ErrorResponse({
-            code: 'UNKNOWN_ERROR',
-            name: 'Unknown error',
-            message: 'The services handled an unknown error',
+          code: err.code,
+          name: 'Validation Error',
+          message: err.message,
         })
-    )
+      )
+    }
+  }
+
+  return res.status(500).json(
+    new ErrorResponse({
+      code: 'UNKNOWN_ERROR',
+      name: 'Unknown error',
+      message: 'The services handled an unknown error',
+    })
+  )
 }
