@@ -1,5 +1,7 @@
-import { type Request, type Response, type NextFunction } from 'express'
+import { type NextFunction, type Request, type Response } from 'express'
 import { ErrorResponse } from '../sharable/jsend/ErrorResponse'
+import { AppError } from '../sharable/AppError'
+import { ErrorCodes } from '../sharable/jsend/ErrorCodes'
 
 export const errorHandler = (
     err: unknown,
@@ -7,6 +9,20 @@ export const errorHandler = (
     res: Response,
     next: NextFunction
 ) => {
+    console.log(err)
+
+    if (err instanceof AppError) {
+        if (err.code === ErrorCodes.VALIDATION_ERROR) {
+            return res.status(err.statusCode).json(
+                new ErrorResponse({
+                    code: err.code,
+                    name: 'Validation Error',
+                    message: err.message,
+                })
+            )
+        }
+    }
+
     return res.status(500).json(
         new ErrorResponse({
             code: 'UNKNOWN_ERROR',
