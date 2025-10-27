@@ -25,7 +25,7 @@ export const errorHandler = (
 
   return res.status(500).json(
     new ErrorResponse({
-      code: 'UNKNOWN_ERROR',
+      code: 'UNKNOWN_ERROR1',
       name: 'Unknown error',
       message: 'The services handled an unknown error',
     })
