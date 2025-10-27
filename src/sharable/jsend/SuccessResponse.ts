@@ -1,5 +1,5 @@
 export class FailResponse<T extends Record<string, unknown>> {
-    status: 'fail' = 'fail'
+    status: 'success' = 'success'
     data: T
 
     constructor(data: T) {
