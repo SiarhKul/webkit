@@ -21,6 +21,16 @@ export const errorHandler = (
         })
       )
     }
+
+    if (err.code === ErrorCodes.DUPLICATE_DATA) {
+      return res.status(err.statusCode).json(
+        new ErrorResponse({
+          code: err.code,
+          name: 'Duplicate Data',
+          message: err.message,
+        })
+      )
+    }
   }
 
   return res.status(500).json(
