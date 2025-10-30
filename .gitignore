@@ -3,4 +3,5 @@
 node_modules/
 build/
 tmp/
-temp/
+temp/!/postgres-data/
+./postgres-data
