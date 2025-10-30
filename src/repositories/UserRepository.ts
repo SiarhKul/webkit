@@ -21,7 +21,7 @@ export class UserRepository {
   static async test(user: User) {
     return await new Promise((resolve, reject) => {
       setTimeout(() => {
-        // reject(new Error('My error'))
+        reject(new Error('My error'))
         resolve([{ id: 1, ...user }])
       }, 2000)
     })
