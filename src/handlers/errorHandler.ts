@@ -1,14 +1,9 @@
-import { type NextFunction, type Request, type Response } from 'express'
+import { type Request, type Response } from 'express'
 import { ErrorResponse } from '../sharable/jsend/ErrorResponse'
 import { AppError } from '../sharable/AppError'
 import { ErrorCodes } from '../sharable/jsend/ErrorCodes'
 
-export const errorHandler = (
-  err: unknown,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const errorHandler = (err: unknown, req: Request, res: Response) => {
   console.log(err)
 
   if (err instanceof AppError) {

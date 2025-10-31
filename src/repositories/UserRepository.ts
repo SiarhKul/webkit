@@ -3,12 +3,13 @@ import { AppDataSource } from '../integrations/data-source'
 import { QueryFailedError } from 'typeorm'
 import { AppError } from '../sharable/AppError'
 import { ErrorCodes } from '../sharable/jsend/ErrorCodes'
+import { TUserRequest } from '../controllers/UserController'
 
 export class UserRepository {
-  static async sighIn(user: any) {
+  static async sighIn(user: TUserRequest) {
     try {
       const userRepository = AppDataSource.getRepository(User)
-      //todo: Add eslint
+
       return await userRepository.save(user)
     } catch (e: unknown) {
       if (e instanceof QueryFailedError) {
