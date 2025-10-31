@@ -6,6 +6,7 @@ import { User } from '../entity/User'
 import { SuccessResponse } from '../sharable/jsend/SuccessResponse'
 import { zUserRequest } from '../sharable/schemas/user'
 import { z } from 'zod'
+//todo: Add logger
 export class UserController {
   static sighIn = async (req: Request, res: Response, next: NextFunction) => {
     try {

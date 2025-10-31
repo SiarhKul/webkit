@@ -1,19 +1,20 @@
 import 'reflect-metadata'
 import { app, port } from './app'
+import logger from './integrations/logger'
 
 import { AppDataSource } from './integrations/data-source'
 
 async function bootstrap() {
-    try {
-        app.listen(port, () => {
-            console.log(`Listening port is ${port}`)
-        })
-        await AppDataSource.initialize()
-        console.log('Database initialized')
-    } catch (err) {
-        console.error('Failed to initialize database', err)
-        process.exit(1)
-    }
+  try {
+    app.listen(port, () => {
+      logger.info(`Listening port is ${port}`)
+    })
+    await AppDataSource.initialize()
+    logger.info('Database initialized')
+  } catch (err) {
+    logger.error('Failed to initialize database', err)
+    process.exit(1)
+  }
 }
 
 bootstrap()
