@@ -6,7 +6,7 @@ import { ErrorCodes } from '../sharable/jsend/ErrorCodes'
 import { TUserRequest } from '../controllers/UserController'
 
 export class UserRepository {
-  static async sighIn(user: TUserRequest) {
+  static async sighIn(user: TUserRequest): Promise<User> {
     try {
       const userRepository = AppDataSource.getRepository(User)
 

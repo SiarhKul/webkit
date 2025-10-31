@@ -1,11 +1,15 @@
-import { type Request, type Response } from 'express'
+import { type Request, type Response, type NextFunction } from 'express'
 import { ErrorResponse } from '../sharable/jsend/ErrorResponse'
 import { AppError } from '../sharable/AppError'
 import { ErrorCodes } from '../sharable/jsend/ErrorCodes'
 
-export const errorHandler = (err: unknown, req: Request, res: Response) => {
-  console.log(err)
-
+export const errorHandler = (
+  err: unknown,
+  _req: Request,
+  res: Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _next: NextFunction
+) => {
   if (err instanceof AppError) {
     if (err.code === ErrorCodes.VALIDATION_ERROR) {
       return res.status(err.statusCode).json(

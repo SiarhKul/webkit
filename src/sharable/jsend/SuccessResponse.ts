@@ -1,8 +1,8 @@
-export class FailResponse<T extends Record<string, unknown>> {
-    status: 'success' = 'success'
-    data: T
+export class SuccessResponse<T> {
+  status = 'success' as const
+  data: T
 
-    constructor(data: T) {
-        this.data = data
-    }
+  constructor(data: T) {
+    this.data = data
+  }
 }
