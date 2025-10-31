@@ -3,7 +3,7 @@ import { AppDataSource } from '../integrations/data-source'
 import { QueryFailedError } from 'typeorm'
 import { AppError } from '../sharable/AppError'
 import { ErrorCodes } from '../sharable/jsend/ErrorCodes'
-import { TUserRequest } from '../controllers/UserController'
+import { TUserRequest } from '../types/types/user'
 
 export class UserRepository {
   static async sighIn(user: TUserRequest): Promise<User> {

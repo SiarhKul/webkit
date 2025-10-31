@@ -2,20 +2,10 @@ import type { Request, Response, NextFunction } from 'express'
 import { UserService } from '../services/UserService'
 import { AppError } from '../sharable/AppError'
 import { ErrorCodes } from '../sharable/jsend/ErrorCodes'
-import { Roles, User } from '../entity/User'
-import { z } from 'zod'
+import { User } from '../entity/User'
 import { SuccessResponse } from '../sharable/jsend/SuccessResponse'
-
-const zUserRequest = z.object({
-  firstName: z.string().max(255, 'Too long'),
-  lastName: z.string().max(255, 'Too long'),
-  email: z.email('Must be email'),
-  password: z.string().min(8, 'Must be more than 8'),
-  role: z.enum(Roles),
-})
-
-export type TUserRequest = z.infer<typeof zUserRequest>
-
+import { zUserRequest } from '../sharable/schemas/user'
+import { z } from 'zod'
 export class UserController {
   static sighIn = async (req: Request, res: Response, next: NextFunction) => {
     try {

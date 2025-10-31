@@ -1,5 +1,5 @@
 import { UserRepository } from '../repositories/UserRepository'
-import { TUserRequest } from '../controllers/UserController'
+import { TUserRequest } from '../types/types/user'
 
 export type { Request, Response } from 'express'
 
