@@ -1,7 +1,7 @@
 {
   "name": "webkit",
   "version": "1.0.0",
-  "type": "commonjs",
+  "type": "module",
   "main": "main.js",
   "scripts": {
     "build": "tsc",
