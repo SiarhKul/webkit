@@ -6,6 +6,7 @@ import { User } from '../entity/User'
 import { SuccessResponse } from '../sharable/jsend/SuccessResponse'
 import { zUserRequest } from '../sharable/schemas/user'
 import { z } from 'zod'
+import logger from '../integrations/logger'
 //todo: Add logger
 export class UserController {
   static sighIn = async (req: Request, res: Response, next: NextFunction) => {
@@ -22,6 +23,7 @@ export class UserController {
       }
 
       const users = await UserService.sighIn(validationResult.data)
+      logger.info('User has been created', users)
       res.status(200).json(new SuccessResponse<User>(users))
     } catch (err) {
       next(err)

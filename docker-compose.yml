@@ -1,15 +1,63 @@
 version: '3.8'
 
 services:
-    db-webkit:
-        image: postgres:16-alpine
-        container_name: db-webkit-container
-        restart: always
-        environment:
-            POSTGRES_USER: 'user'
-            POSTGRES_PASSWORD: 'password'
-            POSTGRES_DB: 'db-webkit'
-        ports:
-            - '5432:5432'
-        volumes:
-            - ./postgres-data:/var/lib/postgresql/data
+  be-webkit:
+    build: .
+    ports:
+      - '8080:8080'
+    environment:
+      - LOKI_HOST=http://loki:3100
+    depends_on:
+      - db-webkit
+      - loki
+    networks:
+      - monitoring
+
+  db-webkit:
+    image: postgres:16-alpine
+    container_name: db-webkit-container
+    restart: always
+    environment:
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_DB: 'db-webkit'
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    networks:
+      - monitoring
+
+  loki:
+    image: grafana/loki:latest
+    container_name: loki-container
+    restart: always
+    ports:
+      - '3100:3100'
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-data:/loki
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana-container
+    restart: always
+    ports:
+      - '3000:3000'
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      - loki
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge

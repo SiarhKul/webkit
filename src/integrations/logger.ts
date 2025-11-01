@@ -1,4 +1,5 @@
 import winston from 'winston'
+import LokiTransport from 'winston-loki'
 
 const {
   combine,
@@ -43,7 +44,12 @@ const logger = winston.createLogger({
       return `${tsStr} ${levelStr}: ${msgStr}`
     })
   ),
-  transports: [new winston.transports.Console()],
+  transports: [
+    new winston.transports.Console(),
+    new LokiTransport({
+      host: process.env.LOKI_HOST || 'http://localhost:3100',
+    }),
+  ],
 })
 
 export default logger
