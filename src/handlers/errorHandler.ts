@@ -10,6 +10,8 @@ export const errorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction
 ) => {
+  console.log('00000000000000000000000000000000000', err)
+
   if (err instanceof AppError) {
     if (err.code === ErrorCodes.VALIDATION_ERROR) {
       return res.status(err.statusCode).json(

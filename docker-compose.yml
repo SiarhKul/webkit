@@ -1,18 +1,6 @@
 version: '3.8'
 
 services:
-  be-webkit:
-    build: .
-    ports:
-      - '8080:8080'
-    environment:
-      - LOKI_HOST=http://loki:3100
-    depends_on:
-      - db-webkit
-      - loki
-    networks:
-      - monitoring
-
   db-webkit:
     image: postgres:16-alpine
     container_name: db-webkit-container
@@ -53,6 +41,23 @@ services:
     volumes:
       - ./grafana-data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      - loki
+    networks:
+      - monitoring
+
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail-container
+    restart: always
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/config.yml
+      - ./logs:/var/log/webkit:ro
+      - ./promtail-positions:/tmp
+      # Docker log collection (works on Linux, optional on Windows)
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command: -config.file=/etc/promtail/config.yml
     depends_on:
       - loki
     networks:

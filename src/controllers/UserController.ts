@@ -7,9 +7,11 @@ import { SuccessResponse } from '../sharable/jsend/SuccessResponse'
 import { zUserRequest } from '../sharable/schemas/user'
 import { z } from 'zod'
 import logger from '../integrations/logger'
-//todo: Add logger
+
 export class UserController {
   static sighIn = async (req: Request, res: Response, next: NextFunction) => {
+    logger.info('1')
+
     try {
       const validationResult = zUserRequest.safeParse(req.body)
 
@@ -23,7 +25,8 @@ export class UserController {
       }
 
       const users = await UserService.sighIn(validationResult.data)
-      logger.info('User has been created', users)
+      console.log('1111111111111111', users)
+      logger.info('User has been created')
       res.status(200).json(new SuccessResponse<User>(users))
     } catch (err) {
       next(err)

@@ -1,55 +1,39 @@
 import winston from 'winston'
 import LokiTransport from 'winston-loki'
 
-const {
-  combine,
-  timestamp,
-  printf,
-  colorize,
-  json,
-  splat,
-  prettyPrint,
-  simple,
-} = winston.format
+const { combine, timestamp, printf, colorize, json, splat } = winston.format
+
+const consoleFormat = combine(
+  colorize(),
+  timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+  splat(),
+  printf((info) => {
+    return `${info.timestamp} ${info.level}: ${info.message}`
+  })
+)
+
+const lokiFormat = combine(timestamp(), json())
 
 const logger = winston.createLogger({
   level: 'info',
-  format: combine(
-    splat(),
-    json(),
-    colorize(),
-    timestamp(),
-    prettyPrint(),
-    simple(),
-    printf((info) => {
-      const levelStr =
-        typeof info.level === 'string' ? info.level : String(info.level)
-      const tsStr =
-        typeof info.timestamp === 'string'
-          ? info.timestamp
-          : info.timestamp !== undefined
-            ? JSON.stringify(info.timestamp)
-            : ''
-      if (info.stack) {
-        const stackStr =
-          typeof info.stack === 'string'
-            ? info.stack
-            : JSON.stringify(info.stack)
-        return `${tsStr} ${levelStr}: ${stackStr}`
-      }
-      const msgStr =
-        typeof info.message === 'string'
-          ? info.message
-          : JSON.stringify(info.message)
-      return `${tsStr} ${levelStr}: ${msgStr}`
-    })
-  ),
+
   transports: [
-    new winston.transports.Console(),
+    new winston.transports.Console({
+      format: consoleFormat,
+    }),
+
     new LokiTransport({
       host: process.env.LOKI_HOST || 'http://localhost:3100',
+      labels: { app: 'my-app' },
+      format: lokiFormat,
+      replaceTimestamp: true,
+      onConnectionError: (err) => console.error(err),
     }),
   ],
 })
+
+logger.info('Это тестовый лог для Loki и консоли')
+logger.warn('Это %s лог', 'ПРЕДУПРЕЖДАЮЩИЙ')
+logger.error(new Error('Это тестовая ошибка'))
 
 export default logger
