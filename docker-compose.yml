@@ -46,23 +46,6 @@ services:
     networks:
       - monitoring
 
-  promtail:
-    image: grafana/promtail:latest
-    container_name: promtail-container
-    restart: always
-    volumes:
-      - ./promtail-config.yml:/etc/promtail/config.yml
-      - ./logs:/var/log/webkit:ro
-      - ./promtail-positions:/tmp
-      # Docker log collection (works on Linux, optional on Windows)
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    command: -config.file=/etc/promtail/config.yml
-    depends_on:
-      - loki
-    networks:
-      - monitoring
-
 networks:
   monitoring:
     driver: bridge

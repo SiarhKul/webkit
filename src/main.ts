@@ -12,9 +12,8 @@ async function bootstrap() {
     await AppDataSource.initialize()
     logger.info('Database initialized')
   } catch (err) {
-    logger.error('Failed to initialize database', err, () => {
-      process.exit(1)
-    })
+    logger.error('Failed to initialize database', err)
+    process.exit(1)
   }
 }
 

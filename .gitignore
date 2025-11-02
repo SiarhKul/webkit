@@ -7,4 +7,3 @@ temp/!/postgres-data/
 ./postgres-data
 loki-data/
 grafana-data/
-promtail-positions/
