@@ -45,8 +45,7 @@ const parseConfig = () => {
     return variables
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.log(error.issues)
-      console.error('❌ Invalid environment configuration:')
+      console.error('❌ Invalid environment configuration:', error.issues)
       process.exit(1)
     }
     throw error
