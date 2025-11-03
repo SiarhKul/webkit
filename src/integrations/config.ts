@@ -2,7 +2,6 @@ import { z } from 'zod'
 import dotenv from 'dotenv'
 import path from 'path'
 
-// Determine the environment
 const env = process.env.NODE_ENV || 'local'
 const rootEnvFile = '.env'
 const envFile = `.env.${env}`
@@ -12,17 +11,9 @@ const envFile = `.env.${env}`
 dotenv.config({ path: path.resolve(process.cwd(), rootEnvFile) })
 dotenv.config({ path: path.resolve(process.cwd(), envFile) })
 
-// Define the configuration schema
 const configSchema = z.object({
-  // Node Environment
-  NODE_ENV: z
-    .enum(['development', 'production', 'test', 'local'])
-    .default('development'),
-
-  // Server Configuration
+  NODE_ENV: z.enum(['development', 'production', 'test', 'local']),
   PORT: z.string().transform(Number).pipe(z.number().int().positive()),
-
-  // Database Configuration
   DB_HOST: z.string(),
   DB_PORT: z
     .string()
@@ -39,7 +30,6 @@ const configSchema = z.object({
     .string()
     .transform((val) => val === 'true')
     .pipe(z.boolean()),
-  // Logging to Loki
   LOG_TO_LOKI: z
     .string()
     .default('false')
@@ -48,10 +38,10 @@ const configSchema = z.object({
   LOKI_HOST: z.string().url().optional(),
 })
 
-// Parse and validate environment variables
 const parseConfig = () => {
   try {
     const variables = configSchema.parse(process.env)
+    console.log('VARIABLES:', variables)
     return variables
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -65,8 +55,6 @@ const parseConfig = () => {
   }
 }
 
-// Export validated configuration
 export const config = parseConfig()
 
-// Export type for TypeScript
 export type Config = z.infer<typeof configSchema>
