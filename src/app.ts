@@ -4,8 +4,10 @@ import { userRouter } from './routes/user'
 import bodyParser from 'body-parser'
 import { errorHandler } from './handlers/errorHandler'
 
+import { config } from './integrations/config'
+
 const app: Application = express()
-const port = 3002
+const port = config.PORT
 
 app.use(bodyParser.json())
 

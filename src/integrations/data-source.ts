@@ -1,26 +1,17 @@
 import { DataSource } from 'typeorm'
 import { User } from '../entity/User'
-
-const {
-    DB_HOST = 'localhost',
-    DB_PORT = '5432',
-    DB_USER = 'user',
-    DB_PASSWORD = 'password',
-    DB_NAME = 'db-webkit',
-    DB_LOGGING = 'false',
-    DB_SYNCHRONIZE = 'false',
-} = process.env
+import { config } from './config'
 
 export const AppDataSource = new DataSource({
-    type: 'postgres',
-    host: DB_HOST,
-    port: Number(DB_PORT),
-    username: DB_USER,
-    password: DB_PASSWORD,
-    database: DB_NAME,
-    synchronize: DB_SYNCHRONIZE === 'true',
-    logging: DB_LOGGING === 'true',
-    entities: [User],
-    migrations: ['src/migration/*.ts'],
-    subscribers: [],
+  type: 'postgres',
+  host: config.DB_HOST,
+  port: config.DB_PORT,
+  username: config.DB_USER,
+  password: config.DB_PASSWORD,
+  database: config.DB_NAME,
+  synchronize: config.DB_SYNCHRONIZE,
+  logging: config.DB_LOGGING,
+  entities: [User],
+  migrations: ['src/migration/*.ts'],
+  subscribers: [],
 })

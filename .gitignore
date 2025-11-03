@@ -7,3 +7,11 @@ temp/!/postgres-data/
 ./postgres-data
 loki-data/
 grafana-data/
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local

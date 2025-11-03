@@ -1,4 +1,6 @@
 import 'reflect-metadata'
+// Load environment variables first, before other imports
+import './integrations/config'
 import { app, port } from './app'
 import logger from './integrations/logger'
 

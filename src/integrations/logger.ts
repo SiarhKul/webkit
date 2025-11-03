@@ -1,5 +1,6 @@
 import winston from 'winston'
 import LokiTransport from 'winston-loki'
+import { config } from './config'
 
 const { combine, timestamp, printf, colorize, splat } = winston.format
 
@@ -24,23 +25,23 @@ const consoleFormat = combine(
   })
 )
 
+const transports: winston.transport[] = [
+  new LokiTransport({
+    host: config.LOKI_HOST,
+    labels: { app: `be-${config.NODE_ENV}-webkit` },
+    json: true,
+    replaceTimestamp: true,
+    onConnectionError: (err) => console.error(err),
+  }),
+
+  new winston.transports.Console({
+    format: consoleFormat,
+  }),
+]
+
 const logger = winston.createLogger({
   level: 'info',
-
-  transports: [
-    new winston.transports.Console({
-      format: consoleFormat,
-    }),
-
-    new LokiTransport({
-      host: process.env.LOKI_HOST || 'http://localhost:3100',
-      labels: { app: `be-${process.env.NODE_ENV || 'local'}-webkit` },
-
-      json: true,
-      replaceTimestamp: true,
-      onConnectionError: (err) => console.error(err),
-    }),
-  ],
+  transports,
 })
 
 export default logger
