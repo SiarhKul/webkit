@@ -7,4 +7,7 @@ export class UserService {
   static sighIn = async (user: TUserRequest) => {
     return await UserRepository.sighIn(user)
   }
+  static getAllUsers = async () => {
+    return await UserRepository.getAllUsers()
+  }
 }

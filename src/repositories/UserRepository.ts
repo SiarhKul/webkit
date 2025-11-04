@@ -19,6 +19,10 @@ export class UserRepository {
     }
   }
 
+  static async getAllUsers() {
+    return Promise.resolve([new User()])
+  }
+
   static async test(user: User) {
     return await new Promise((resolve, reject) => {
       setTimeout(() => {

@@ -25,11 +25,20 @@ export class UserController {
       }
 
       const users = await UserService.sighIn(validationResult.data)
-      console.log('1111111111111111', users)
       logger.info('User has been created')
       res.status(200).json(new SuccessResponse<User>(users))
     } catch (err) {
       next(err)
     }
+  }
+
+  static getAllUsers = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const users = await UserService.getAllUsers()
+
+    res.status(200).json(new SuccessResponse<User[]>(users))
   }
 }

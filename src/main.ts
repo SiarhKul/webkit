@@ -4,7 +4,7 @@ import { app, port } from './app'
 import logger from './integrations/logger'
 
 import { AppDataSource } from './integrations/data-source'
-
+//todo: Add CI/CD
 async function bootstrap() {
   try {
     app.listen(port, () => {
