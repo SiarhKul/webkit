@@ -5,7 +5,7 @@ import bodyParser from 'body-parser'
 import { errorHandler } from './handlers/errorHandler'
 
 import { config } from './integrations/config'
-//todo: use(*)
+
 const app: Application = express()
 const port = config.PORT
 

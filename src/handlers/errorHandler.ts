@@ -2,6 +2,7 @@ import { type Request, type Response, type NextFunction } from 'express'
 import { ErrorResponse } from '../sharable/jsend/ErrorResponse'
 import { AppError } from '../sharable/AppError'
 import { ErrorCodes } from '../sharable/jsend/ErrorCodes'
+import logger from '../integrations/logger'
 
 export const errorHandler = (
   err: unknown,
@@ -10,8 +11,6 @@ export const errorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction
 ) => {
-  console.log('00000000000000000000000000000000000', err)
-
   if (err instanceof AppError) {
     if (err.code === ErrorCodes.VALIDATION_ERROR) {
       return res.status(err.statusCode).json(
@@ -33,6 +32,15 @@ export const errorHandler = (
       )
     }
   }
+  logger.error(
+    'Uncaught error %o:',
+    new ErrorResponse({
+      code: 'UNCAUGHT_ERROR',
+      name: 'Uncaught error',
+      message: 'The services handled an uncaught error',
+      data: err,
+    })
+  )
 
   return res.status(500).json(
     new ErrorResponse({

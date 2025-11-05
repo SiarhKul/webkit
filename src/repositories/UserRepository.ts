@@ -20,7 +20,9 @@ export class UserRepository {
   }
 
   static async getAllUsers() {
-    return Promise.resolve([new User()])
+    return await AppDataSource.getRepository(User).find()
+
+    // return Promise.resolve([new User()])
   }
 
   static async test(user: User) {
