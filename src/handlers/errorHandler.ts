@@ -32,21 +32,17 @@ export const errorHandler = (
       )
     }
   }
-  logger.error(
-    'Uncaught error %o:',
-    new ErrorResponse({
-      code: 'UNCAUGHT_ERROR',
-      name: 'Uncaught error',
-      message: 'The services handled an uncaught error',
-      data: err,
-    })
-  )
 
-  return res.status(500).json(
-    new ErrorResponse({
-      code: 'UNKNOWN_ERROR',
-      name: 'Unknown error',
-      message: 'The services handled an unknown error',
-    })
-  )
+  const ucr = new ErrorResponse({
+    code: 'UNCAUGHT_ERROR',
+    name: 'Uncaught error',
+    message: 'The services handled an uncaught error',
+  })
+
+  logger.error('Uncaught error %o:', {
+    ...ucr,
+    data: err,
+  })
+
+  return res.status(500).json(ucr)
 }
