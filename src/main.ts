@@ -1,8 +1,7 @@
 import 'reflect-metadata'
 import './integrations/config'
-import { app, port } from './app'
+import { app, port, lokiHost } from './app'
 import logger from './integrations/logger'
-import request from 'http'
 
 import { AppDataSource } from './integrations/data-source'
 //todo: Add CI/CD
@@ -16,8 +15,8 @@ async function bootstrap() {
     })
     await AppDataSource.initialize()
     logger.info('Database initialized')
-    //todo: replace hardcoded url
-    const res = await fetch('http://localhost:3100/ready')
+
+    const res = await fetch(`${lokiHost}/ready`)
     if (res.ok) {
       logger.info('Grafana-Lokin initialized %o', res)
     } else {
@@ -25,7 +24,7 @@ async function bootstrap() {
       throw new Error('Failed to initialize Grafana-Loki')
     }
   } catch (err) {
-    logger.error('Failed to initialize', err)
+    logger.error('Failed to initialize:', err)
     process.exit(1)
   }
 }

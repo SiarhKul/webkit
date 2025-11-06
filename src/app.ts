@@ -8,7 +8,7 @@ import { config } from './integrations/config'
 
 const app: Application = express()
 const port = config.PORT
-
+const lokiHost = config.LOKI_HOST
 app.use(bodyParser.json())
 
 app.use(employeeRouter)
@@ -16,4 +16,4 @@ app.use(userRouter)
 
 app.use(errorHandler)
 
-export { app, port }
+export { app, port, lokiHost }
