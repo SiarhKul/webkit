@@ -13,10 +13,10 @@ The project exposes a sample endpoint that returns a mock list of employees and 
 
 - Prerequisites
 - Getting Started
-    - Clone and install
-    - Start PostgreSQL with Docker
-    - Configure environment
-    - Run the server
+  - Clone and install
+  - Start PostgreSQL with Docker
+  - Configure environment
+  - Run the server
 - Scripts
 - Configuration (Environment Variables)
 - Database and Migrations
@@ -152,8 +152,8 @@ If you prefer quick development without migrations, you can temporarily set `DB_
 Base URL (default): `http://localhost:3002`
 
 - GET `/` — returns a mock list of employees
-    - Controller: `src\controllers\EmployController.ts`
-    - Repository: `src\repositories\EmployeeRepository.ts`
+  - Controller: `src\controllers\EmployController.ts`
+  - Repository: `src\repositories\EmployeeRepository.ts`
 
 Example request:
 
@@ -181,15 +181,17 @@ Example response:
 ## Troubleshooting
 
 - Database connection fails / timeout
-    - Ensure Docker container is running: `docker compose ps`
-    - Verify env vars match docker-compose credentials
-    - Confirm port 5432 is not blocked by another service
+  - Ensure Docker container is running: `docker compose ps`
+  - Verify env vars match docker-compose credentials
+  - Confirm port 5432 is not blocked by another service
 - Migrations do nothing
-    - Ensure your entities are included in the DataSource `entities` array
-    - Make sure the `src/migration` folder exists and you pass a proper output path when generating
+  - Ensure your entities are included in the DataSource `entities` array
+  - Make sure the `src/migration` folder exists and you pass a proper output path when generating
 - Application starts but queries fail
-    - The server begins listening before DB init completes. Check logs for `Database initialized` to confirm connection. Add retry or health checks if needed for your environment.
+  - The server begins listening before DB init completes. Check logs for `Database initialized` to confirm connection. Add retry or health checks if needed for your environment.
 
 ## License
 
 ISC (see package.json).
+
+curl http://localhost:3100/ready
