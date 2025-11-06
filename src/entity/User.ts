@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
-import { Roles } from '../types/enums/index'
+import { Positions, Roles } from '../types/enums/index'
 
 @Entity()
 export class User {
@@ -32,4 +32,11 @@ export class User {
     default: Roles.USER,
   })
   role: Roles
+
+  @Column({
+    type: 'enum',
+    enum: Positions,
+    default: Positions.MANAGER,
+  })
+  position: Positions
 }
