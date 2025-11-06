@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 app.use(employeeRouter)
 app.use(userRouter)
 
-app.all(/.*/, allController)
+// app.all(/.*/, allController)
 
 app.use(errorHandler)
 
