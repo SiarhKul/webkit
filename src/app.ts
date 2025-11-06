@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import { errorHandler } from './handlers/errorHandler'
 
 import { config } from './integrations/config'
+import { allController } from './controllers/AllController'
 
 const app: Application = express()
 const port = config.PORT
@@ -13,6 +14,8 @@ app.use(bodyParser.json())
 
 app.use(employeeRouter)
 app.use(userRouter)
+
+app.all(/.*/, allController)
 
 app.use(errorHandler)
 

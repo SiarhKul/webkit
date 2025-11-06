@@ -7,7 +7,6 @@ import { AppDataSource } from './integrations/data-source'
 //todo: Add CI/CD
 //todo: use(*)
 //todo: unit, integ, e2e
-//todo: check loki connection
 async function bootstrap() {
   try {
     app.listen(port, () => {
@@ -18,7 +17,7 @@ async function bootstrap() {
 
     const res = await fetch(`${lokiHost}/ready`)
     if (res.ok) {
-      logger.info('Grafana-Lokin initialized %o', res)
+      logger.info('Grafana-Loki initialized %o', res)
     } else {
       logger.error('Failed to initialize Grafana-Loki')
       throw new Error('Failed to initialize Grafana-Loki')
