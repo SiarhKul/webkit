@@ -25,19 +25,25 @@ const consoleFormat = combine(
   })
 )
 
+// Always include console transport
 const transports: winston.transport[] = [
-  new LokiTransport({
-    host: config.LOKI_HOST,
-    labels: { app: `be-${config.NODE_ENV}-webkit` },
-    json: true,
-    replaceTimestamp: true,
-    onConnectionError: (err) => console.error(err),
-  }),
-
   new winston.transports.Console({
     format: consoleFormat,
   }),
 ]
+
+// Add Loki transport only if explicitly enabled and host is provided
+if (config.LOG_TO_LOKI && config.LOKI_HOST) {
+  transports.push(
+    new LokiTransport({
+      host: config.LOKI_HOST,
+      labels: { app: `be-${config.NODE_ENV}-webkit` },
+      json: true,
+      replaceTimestamp: true,
+      onConnectionError: (err) => console.error(err),
+    })
+  )
+}
 
 const logger = winston.createLogger({
   level: 'info',

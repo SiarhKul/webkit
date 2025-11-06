@@ -32,7 +32,6 @@ const configSchema = z.object({
     .pipe(z.boolean()),
   LOG_TO_LOKI: z
     .string()
-    .default('false')
     .transform((val) => val === 'true')
     .pipe(z.boolean()),
   LOKI_HOST: z.string().url().optional(),
