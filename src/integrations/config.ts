@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import dotenv from 'dotenv'
-import path from 'path'
+import * as dotenv from 'dotenv'
+import * as path from 'path'
 
 const env = process.env.NODE_ENV || 'local'
 const rootEnvFile = '.env'
@@ -39,8 +39,20 @@ const configSchema = z.object({
 
 const parseConfig = () => {
   try {
-    const variables = configSchema.parse(process.env)
-    console.log('VARIABLES:', variables)
+    const raw = {
+      NODE_ENV: process.env.NODE_ENV ?? 'local',
+      PORT: process.env.PORT ?? '3002',
+      DB_HOST: process.env.DB_HOST ?? 'localhost',
+      DB_PORT: process.env.DB_PORT ?? '5432',
+      DB_USER: process.env.DB_USER ?? 'user',
+      DB_PASSWORD: process.env.DB_PASSWORD ?? 'password',
+      DB_NAME: process.env.DB_NAME ?? 'db-webkit',
+      DB_LOGGING: process.env.DB_LOGGING ?? 'false',
+      DB_SYNCHRONIZE: process.env.DB_SYNCHRONIZE ?? 'false',
+      LOG_TO_LOKI: process.env.LOG_TO_LOKI ?? 'false',
+      LOKI_HOST: process.env.LOKI_HOST,
+    }
+    const variables = configSchema.parse(raw)
     return variables
   } catch (error) {
     if (error instanceof z.ZodError) {

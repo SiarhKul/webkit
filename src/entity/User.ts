@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
-import { Positions, Roles } from '../types/enums/index'
+import { Positions, Roles } from '../types/enums/index.js'
 
 @Entity()
 export class User {
