@@ -6,4 +6,6 @@ export enum Positions {
   QA = 'QA',
   ENGINEER = 'Engineer',
   MANAGER = 'Manager',
+  DEV_OPS = 'DevOps',
+  PRODUCT_MANAGER = 'Product Manager',
 }
