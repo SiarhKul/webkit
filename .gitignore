@@ -15,3 +15,4 @@ grafana-data/
 .env.production
 .env.test
 .env.*.local
+postgres-data/
