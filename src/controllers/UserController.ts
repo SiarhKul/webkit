@@ -32,13 +32,14 @@ export class UserController {
     }
   }
 
-  static getAllUsers = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
+  static getAllUsers = async (req: Request, res: Response) => {
     const users = await UserService.getAllUsers()
 
     res.status(200).json(new SuccessResponse<User[]>(users))
+  }
+
+  static deleteUserBy = async (req: Request, res: Response) => {
+    await UserService.deleteUserBy(1)
+    return res.status(204).json(new SuccessResponse<number>(1))
   }
 }

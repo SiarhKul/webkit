@@ -8,4 +8,6 @@ userRouter
   .post(UserController.sighIn)
   .get(UserController.getAllUsers)
 
+userRouter.delete('/user/:id', UserController.deleteUserBy)
+
 export { userRouter }

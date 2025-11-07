@@ -25,14 +25,12 @@ const consoleFormat = combine(
   })
 )
 
-// Always include console transport
 const transports: winston.transport[] = [
   new winston.transports.Console({
     format: consoleFormat,
   }),
 ]
 
-// Add Loki transport only if explicitly enabled and host is provided
 if (config.LOG_TO_LOKI && config.LOKI_HOST) {
   transports.push(
     new LokiTransport({

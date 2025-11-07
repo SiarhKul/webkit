@@ -21,8 +21,14 @@ export class UserRepository {
 
   static async getAllUsers() {
     return await AppDataSource.getRepository(User).find()
+  }
 
-    // return Promise.resolve([new User()])
+  static async deleteUserById(id: number) {
+    try {
+      return await AppDataSource.getRepository(User).delete(id)
+    } catch (e: unknown) {
+      console.log(e)
+    }
   }
 
   static async test(user: User) {

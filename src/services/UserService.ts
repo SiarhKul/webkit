@@ -4,10 +4,15 @@ import { TUserRequest } from '../types/types/user'
 export type { Request, Response } from 'express'
 
 export class UserService {
-  static sighIn = async (user: TUserRequest) => {
+  static async sighIn(user: TUserRequest) {
     return await UserRepository.sighIn(user)
   }
-  static getAllUsers = async () => {
+
+  static async getAllUsers() {
     return await UserRepository.getAllUsers()
+  }
+
+  static async deleteUserBy(id: number) {
+    return await UserRepository.deleteUserById(id)
   }
 }
