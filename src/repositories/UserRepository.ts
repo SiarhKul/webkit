@@ -23,11 +23,11 @@ export class UserRepository {
     return await AppDataSource.getRepository(User).find()
   }
 
-  static async deleteUserById(id: number) {
-    try {
-      return await AppDataSource.getRepository(User).delete(id)
-    } catch (e: unknown) {
-      console.log(e)
+  static async deleteUserById(id: number): Promise<void> {
+    const result = await AppDataSource.getRepository(User).delete(id)
+    console.log('result', result)
+    if (!result.affected || result.affected === 0) {
+      throw new AppError(404, ErrorCodes.ENTITY_NOT_FOUND, 'User not found')
     }
   }
 

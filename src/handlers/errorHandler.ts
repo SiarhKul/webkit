@@ -31,6 +31,16 @@ export const errorHandler = (
         })
       )
     }
+
+    if (err.code === ErrorCodes.ENTITY_NOT_FOUND) {
+      return res.status(err.statusCode).json(
+        new ErrorResponse({
+          code: err.code,
+          name: 'Entity not found',
+          message: err.message,
+        })
+      )
+    }
   }
 
   const ucr = new ErrorResponse({
