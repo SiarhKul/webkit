@@ -13,20 +13,16 @@ export class UserController {
     const userRequest = new User()
     Object.assign(userRequest, req.body)
 
-    try {
-      const errors = await validate(userRequest)
-      if (errors.length === 0) {
-        const user = await UserService.sighIn(userRequest)
-        logger.info('User has been created %o', user)
-        res.status(200).json(new SuccessResponse<User>(user))
-      } else {
-        logger.error('User validation fail %o', errors)
-        next(
-          new AppError(422, ErrorCodes.VALIDATION_ERROR, JSON.stringify(errors))
-        )
-      }
-    } catch (err) {
-      next(err)
+    const errors = await validate(userRequest)
+    if (errors.length === 0) {
+      const user = await UserService.sighIn(userRequest)
+      logger.info('User has been created %o', user)
+      res.status(200).json(new SuccessResponse<User>(user))
+    } else {
+      logger.error('User validation fail %o', errors)
+      next(
+        new AppError(422, ErrorCodes.VALIDATION_ERROR, JSON.stringify(errors))
+      )
     }
   }
 
