@@ -37,13 +37,9 @@ export class UserController {
     res: Response,
     next: NextFunction
   ) => {
-    try {
-      const id = Number(req.params.id)
+    const id = Number(req.params.id)
 
-      await UserService.deleteUserBy(id)
-      return res.status(204).send()
-    } catch (err) {
-      next(err)
-    }
+    await UserService.deleteUserBy(id)
+    return res.status(204).send()
   }
 }
