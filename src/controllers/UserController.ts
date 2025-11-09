@@ -4,29 +4,29 @@ import { AppError } from '../sharable/AppError'
 import { ErrorCodes } from '../sharable/jsend/ErrorCodes'
 import { User } from '../entity/User'
 import { SuccessResponse } from '../sharable/jsend/SuccessResponse'
-import { zUserRequest } from '../sharable/schemas/user'
-import { z } from 'zod'
+
 import logger from '../integrations/logger'
+import { validate } from 'class-validator'
 
 export class UserController {
   static sighIn = async (req: Request, res: Response, next: NextFunction) => {
-    logger.info('1')
+    const userRequest = new User()
+    Object.assign(userRequest, req.body)
 
     try {
-      const validationResult = zUserRequest.safeParse(req.body)
-
-      if (validationResult.error) {
-        console.log(validationResult)
+      const errors = await validate(userRequest)
+      if (errors.length === 0) {
+        const user = await UserService.sighIn(userRequest)
+        logger.info('User has been created %o', user)
+        res.status(200).json(new SuccessResponse<User>(user))
+      } else {
+        logger.error('User validation fail %o', errors)
         throw new AppError(
           422,
           ErrorCodes.VALIDATION_ERROR,
-          z.prettifyError(validationResult.error)
+          JSON.stringify(errors)
         )
       }
-
-      const users = await UserService.sighIn(validationResult.data)
-      logger.info('User has been created')
-      res.status(200).json(new SuccessResponse<User>(users))
     } catch (err) {
       next(err)
     }
