@@ -21,10 +21,8 @@ export class UserController {
         res.status(200).json(new SuccessResponse<User>(user))
       } else {
         logger.error('User validation fail %o', errors)
-        throw new AppError(
-          422,
-          ErrorCodes.VALIDATION_ERROR,
-          JSON.stringify(errors)
+        next(
+          new AppError(422, ErrorCodes.VALIDATION_ERROR, JSON.stringify(errors))
         )
       }
     } catch (err) {
@@ -32,7 +30,7 @@ export class UserController {
     }
   }
 
-  static getAllUsers = async (req: Request, res: Response) => {
+  static getAllUsers = async (_req: Request, res: Response) => {
     const users = await UserService.getAllUsers()
 
     res.status(200).json(new SuccessResponse<User[]>(users))
