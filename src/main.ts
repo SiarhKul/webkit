@@ -5,9 +5,7 @@ import logger from './integrations/logger'
 
 import { AppDataSource } from './integrations/data-source'
 //todo: Add CI/CD
-//todo: use(*)
 //todo: unit, integ, e2e
-//todo: use class-validator
 async function bootstrap() {
   try {
     app.listen(port, () => {
