@@ -6,6 +6,8 @@ const userRouter = Router()
 
 userRouter.get('/user', UserController.getAllUsers)
 userRouter.post('/user', UserController.sighIn)
+userRouter.get('/user/:id', validateParameter('id'), UserController.getUserById)
+userRouter.put('/user/:id', validateParameter('id'), UserController.updateUser)
 userRouter.delete(
   '/user/:id',
   validateParameter('id'),

@@ -3,14 +3,13 @@ import { AppDataSource } from '../integrations/data-source'
 import { QueryFailedError } from 'typeorm'
 import { AppError } from '../sharable/AppError'
 import { ErrorCodes } from '../sharable/jsend/ErrorCodes'
-import { TUserRequest } from '../types/types/user'
 
 export class UserRepository {
-  static async sighIn(user: TUserRequest): Promise<User> {
-    try {
-      const userRepository = AppDataSource.getRepository(User)
+  static userRep = AppDataSource.getRepository(User)
 
-      return await userRepository.save(user)
+  static async sighIn(user: User) {
+    try {
+      return await this.userRep.save<User>(user)
     } catch (e: unknown) {
       if (e instanceof QueryFailedError) {
         throw new AppError(409, ErrorCodes.DUPLICATE_DATA, e.message)
@@ -19,12 +18,41 @@ export class UserRepository {
     }
   }
 
-  static async getAllUsers() {
-    return await AppDataSource.getRepository(User).find()
+  static async getAllUsers(): Promise<User[]> {
+    return await this.userRep.find()
+  }
+
+  static async getUserById(id: number): Promise<User> {
+    const user = await this.userRep.findOne({
+      where: { id },
+    })
+    if (!user) {
+      throw new AppError(404, ErrorCodes.ENTITY_NOT_FOUND, 'User not found')
+    }
+    return user
+  }
+
+  static async updateUserById(
+    id: number,
+    userData: Partial<User>
+  ): Promise<User> {
+    try {
+      const user = await this.getUserById(id)
+      Object.assign(user, userData)
+      return await this.userRep.save(user)
+    } catch (e: unknown) {
+      if (e instanceof QueryFailedError) {
+        throw new AppError(409, ErrorCodes.DUPLICATE_DATA, e.message)
+      }
+      if (e instanceof AppError) {
+        throw e
+      }
+      throw e
+    }
   }
 
   static async deleteUserById(id: number): Promise<void> {
-    const result = await AppDataSource.getRepository(User).delete(id)
+    const result = await this.userRep.delete(id)
     console.log('result', result)
     if (!result.affected || result.affected === 0) {
       throw new AppError(404, ErrorCodes.ENTITY_NOT_FOUND, 'User not found')
