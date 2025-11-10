@@ -7,6 +7,7 @@ import { SuccessResponse } from '../sharable/jsend/SuccessResponse'
 
 import logger from '../integrations/logger'
 import { validate } from 'class-validator'
+import { plainToInstance } from 'class-transformer'
 
 export class UserController {
   static sighIn = async (req: Request, res: Response, next: NextFunction) => {
@@ -46,8 +47,7 @@ export class UserController {
   ) => {
     const id = Number(req.params.id)
 
-    const userRequest = new User()
-    Object.assign(userRequest, req.body)
+    const userRequest = plainToInstance(User, req.body)
 
     const errors = await validate(userRequest, { skipMissingProperties: true })
     if (errors.length === 0) {
