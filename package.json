@@ -13,7 +13,9 @@
     "typeorm": "typeorm-ts-node-esm",
     "migration:generate": "npm run typeorm -- migration:generate -d src/integrations/data-source.ts",
     "migration:run": "npm run typeorm -- migration:run -d src/integrations/data-source.ts",
-    "migration:revert": "npm run typeorm -- migration:revert -d src/integrations/data-source.ts"
+    "migration:revert": "npm run typeorm -- migration:revert -d src/integrations/data-source.ts",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "keywords": [],
   "author": "",
@@ -35,6 +37,7 @@
   "devDependencies": {
     "@types/express": "^5.0.3",
     "@types/node": "^24.9.1",
+    "@vitest/coverage-v8": "^4.0.8",
     "cross-env": "^10.1.0",
     "eslint": "^9.38.0",
     "husky": "^9.1.7",
@@ -43,7 +46,8 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.2"
+    "typescript-eslint": "^8.46.2",
+    "vitest": "^4.0.8"
   },
   "repository": {
     "type": "git",
