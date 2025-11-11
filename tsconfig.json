@@ -9,6 +9,7 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
-    "strict": false
+    "strict": false,
+    "types": ["vitest/globals"]
   }
 }

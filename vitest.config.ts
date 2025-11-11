@@ -5,11 +5,24 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     setupFiles: [],
-    include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    exclude: ['node_modules/', '**/*.config.ts', '**/*.d.ts'],
+    projects: [
+      {
+        test: {
+          name: { label: 'unit', color: 'green' },
+          include: ['**/*.unit.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+        },
+      },
+      {
+        test: {
+          name: { label: 'e2e', color: 'yellow' },
+          include: ['**/*.e2e.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+        },
+      },
+    ],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      exclude: ['node_modules/', '**/*.config.ts', '**/*.d.ts'],
     },
   },
 })
