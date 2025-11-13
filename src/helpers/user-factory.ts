@@ -1,5 +1,5 @@
-import { User } from '../../../entity/User'
-import { Roles, Positions } from '../../../types/enums/index'
+import { User } from '../entity/User'
+import { Roles, Positions } from '../types/enums/index'
 
 export interface UserFactoryOptions {
   firstName?: string

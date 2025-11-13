@@ -5,7 +5,7 @@ import {
   resetTestDatabase,
 } from '../integrations/testcontainer/test-data-source'
 import { UserRepository } from '../repositories/UserRepository'
-import { createUserData } from '../integrations/testcontainer/helpers/user-factory'
+import { createUserData } from '../helpers/user-factory'
 import { Positions, Roles } from '../types/enums/index'
 import { User } from '../entity/User'
 
@@ -15,9 +15,7 @@ describe('UserRepository', () => {
   beforeEach(async () => {
     testDataSource = await getTestDataSource()
     await resetTestDatabase()
-
-    // Replace the repository with test database repository
-    ;(UserRepository as any).userRep = testDataSource.getRepository(User)
+    UserRepository.userRep = testDataSource.getRepository(User)
   })
 
   describe('getAllUsers', () => {
@@ -33,7 +31,6 @@ describe('UserRepository', () => {
         firstName: 'Alice',
         lastName: 'Smith',
         email: 'alice@example.com',
-
         role: Roles.USER,
         position: Positions.QA,
       })
@@ -52,20 +49,8 @@ describe('UserRepository', () => {
 
       // Assert
       expect(users).toHaveLength(2)
-      expect(users[0]).toMatchObject({
-        firstName: 'Alice',
-        lastName: 'Smith',
-        email: 'alice@example.com',
-        role: Roles.USER,
-        position: Positions.QA,
-      })
-      expect(users[1]).toMatchObject({
-        firstName: 'Bob',
-        lastName: 'Johnson',
-        email: 'bob@example.com',
-        role: Roles.ADMIN,
-        position: Positions.ENGINEER,
-      })
+      expect(users[0]).toMatchObject(user1)
+      expect(users[1]).toMatchObject(user2)
     })
   })
 })
