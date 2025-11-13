@@ -16,7 +16,7 @@ export default defineConfig({
         test: {
           name: { label: 'e2e', color: 'yellow' },
           include: ['**/*.e2e.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-          setupFiles: ['./src/integrations/testcontainer-setup.ts'],
+          setupFiles: ['./src/integrations/testcontainer/setup.ts'],
         },
       },
     ],

@@ -1,6 +1,71 @@
-import { expect, test } from 'vitest'
-import { sum } from '../sum'
+import { describe, it, expect, beforeEach } from 'vitest'
+import { DataSource } from 'typeorm'
+import {
+  getTestDataSource,
+  resetTestDatabase,
+} from '../integrations/testcontainer/test-data-source'
+import { UserRepository } from '../repositories/UserRepository'
+import { createUserData } from '../integrations/testcontainer/helpers/user-factory'
+import { Positions, Roles } from '../types/enums/index'
+import { User } from '../entity/User'
 
-test('adds 1 + 2 to equal 3', () => {
-  expect(sum(1, 2)).toBe(3)
+describe('UserRepository', () => {
+  let testDataSource: DataSource
+
+  beforeEach(async () => {
+    testDataSource = await getTestDataSource()
+    await resetTestDatabase()
+
+    // Replace the repository with test database repository
+    ;(UserRepository as any).userRep = testDataSource.getRepository(User)
+  })
+
+  describe('getAllUsers', () => {
+    it('should return an empty array when no users exist', async () => {
+      const users = await UserRepository.getAllUsers()
+      expect(users).toEqual([])
+      expect(users).toHaveLength(0)
+    })
+
+    it('should return all users when users exist', async () => {
+      // Arrange: Create test users
+      const user1 = createUserData({
+        firstName: 'Alice',
+        lastName: 'Smith',
+        email: 'alice@example.com',
+
+        role: Roles.USER,
+        position: Positions.QA,
+      })
+      const user2 = createUserData({
+        firstName: 'Bob',
+        lastName: 'Johnson',
+        email: 'bob@example.com',
+        role: Roles.ADMIN,
+        position: Positions.ENGINEER,
+      })
+
+      await testDataSource.getRepository(User).save([user1, user2])
+
+      // Act
+      const users = await UserRepository.getAllUsers()
+
+      // Assert
+      expect(users).toHaveLength(2)
+      expect(users[0]).toMatchObject({
+        firstName: 'Alice',
+        lastName: 'Smith',
+        email: 'alice@example.com',
+        role: Roles.USER,
+        position: Positions.QA,
+      })
+      expect(users[1]).toMatchObject({
+        firstName: 'Bob',
+        lastName: 'Johnson',
+        email: 'bob@example.com',
+        role: Roles.ADMIN,
+        position: Positions.ENGINEER,
+      })
+    })
+  })
 })
