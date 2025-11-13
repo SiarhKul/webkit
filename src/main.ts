@@ -6,6 +6,8 @@ import logger from './integrations/logger'
 import { AppDataSource } from './integrations/data-source'
 //todo: Add CI/CD
 //todo: unit, integ, e2e
+//todo: profiler
+//todo: Nginx
 async function bootstrap() {
   try {
     app.listen(port, () => {
