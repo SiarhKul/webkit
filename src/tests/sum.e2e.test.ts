@@ -18,6 +18,27 @@ describe('UserRepository', () => {
     UserRepository.userRep = testDataSource.getRepository(User)
   })
 
+  describe('SighIn', () => {
+    it('should sign in a user', async () => {
+      const user1 = createUserData({
+        firstName: 'Alice',
+        lastName: 'Smith',
+        email: 'alice@example.com',
+        role: Roles.USER,
+        position: Positions.QA,
+      })
+
+      await UserRepository.sighIn(user1)
+      const createdUser = await UserRepository.userRep.findOne({
+        where: {
+          email: user1.email,
+        },
+      })
+
+      expect(createdUser.email).toEqual(user1.email)
+    })
+  })
+
   describe('getAllUsers', () => {
     it('should return an empty array when no users exist', async () => {
       const users = await UserRepository.getAllUsers()

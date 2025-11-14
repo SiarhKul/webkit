@@ -1,15 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 import { Positions, Roles } from '../types/enums/index.js'
-import {
-  Contains,
-  IsInt,
-  Length,
-  IsEmail,
-  IsFQDN,
-  IsDate,
-  Min,
-  Max,
-} from 'class-validator'
+import { Length, IsEmail } from 'class-validator'
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
