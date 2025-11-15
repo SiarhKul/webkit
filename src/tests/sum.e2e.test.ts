@@ -32,6 +32,12 @@ describe('UserRepository', () => {
       const user = await UserRepository.getUserById(2)
       expect(user.id).toEqual(2)
     })
+
+    it('should throw AppError 404 ENTITY_NOT_FOUND when user not found', async () => {
+      await expect(
+        async () => await UserRepository.getUserById(2)
+      ).rejects.toThrowError(/^User not found/)
+    })
   })
 
   describe('SighIn', () => {
