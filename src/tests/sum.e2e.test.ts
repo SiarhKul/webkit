@@ -8,8 +8,6 @@ import { UserRepository } from '../repositories/UserRepository'
 import { createUserData } from '../helpers/user-factory'
 import { Positions, Roles } from '../types/enums/index'
 import { User } from '../entity/User'
-import { AppError } from '../sharable/AppError'
-import { ErrorCodes } from '../sharable/jsend/ErrorCodes'
 
 describe('UserRepository', () => {
   let testDataSource: DataSource
@@ -20,15 +18,25 @@ describe('UserRepository', () => {
     UserRepository.userRep = testDataSource.getRepository(User)
   })
 
-  describe('SighIn', () => {
-    it('should sign in a user', async () => {
-      const user1 = createUserData({
+  describe('getUserById', () => {
+    it('should get a user', async () => {
+      const user1 = createUserData()
+      const user2 = createUserData({
         firstName: 'Alice',
         lastName: 'Smith',
         email: 'alice@example.com',
-        role: Roles.USER,
-        position: Positions.QA,
       })
+
+      await UserRepository.userRep.save([user1, user2])
+
+      const user = await UserRepository.getUserById(2)
+      expect(user.id).toEqual(2)
+    })
+  })
+
+  describe('SighIn', () => {
+    it('should sign in a user', async () => {
+      const user1 = createUserData()
 
       await UserRepository.sighIn(user1)
       const createdUser = await UserRepository.userRep.findOne({
@@ -41,20 +49,8 @@ describe('UserRepository', () => {
     })
 
     it('should throw AppError 409 DUPLICATE_DATA on duplicate email', async () => {
-      const user1 = createUserData({
-        firstName: 'Alice',
-        lastName: 'Smith',
-        email: 'alice@example.com',
-        role: Roles.USER,
-        position: Positions.QA,
-      })
-      const user2 = createUserData({
-        firstName: 'Alice',
-        lastName: 'Smith',
-        email: 'alice@example.com',
-        role: Roles.USER,
-        position: Positions.QA,
-      })
+      const user1 = createUserData()
+      const user2 = createUserData()
 
       await UserRepository.sighIn(user1)
 

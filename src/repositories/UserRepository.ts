@@ -26,6 +26,7 @@ export class UserRepository {
     const user = await this.userRep.findOne({
       where: { id },
     })
+    console.log('user', user)
     if (!user) {
       throw new AppError(404, ErrorCodes.ENTITY_NOT_FOUND, 'User not found')
     }

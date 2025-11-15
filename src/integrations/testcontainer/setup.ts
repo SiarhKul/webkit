@@ -18,6 +18,7 @@ export async function setupTestDatabase(): Promise<DataSource> {
     .withDatabase('test-db')
     .withUsername('test-user')
     .withPassword('test-password')
+    .withExposedPorts({ container: 5432, host: 54321 })
     .start()
 
   testDataSource = new DataSource({

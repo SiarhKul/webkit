@@ -8,6 +8,17 @@ import { AppDataSource } from './integrations/data-source'
 //todo: unit, integ, e2e
 //todo: profiler
 //todo: Nginx
+//todo: helmet
+//todo: express-rate-limit.
+//todo: AWS Secrets Manager
+//todo: Node.js Inspector with Chrome DevTools.
+//todo: Timestamp
+// Log level (e.g., info, warn, error)
+// A descriptive message
+// Request context (e.g., request ID, user ID, IP address)
+// Error stack traces
+// todo:  PM2
+//todo: /health
 async function bootstrap() {
   try {
     app.listen(port, () => {
