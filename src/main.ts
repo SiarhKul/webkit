@@ -5,24 +5,8 @@ import { app, port, lokiHost } from './app'
 import logger from './integrations/logger'
 
 import { AppDataSource } from './integrations/data-source'
-//todo: Add CI/CD
-//todo: unit, integ, e2e
-//todo: profiler
-//todo: Nginx
-//todo: helmet
-//todo: express-rate-limit.
-//todo: AWS Secrets Manager
-//todo: Node.js Inspector with Chrome DevTools.
-//todo: Timestamp
-// Log level (e.g., info, warn, error)
-// A descriptive message
-// Request context (e.g., request ID, user ID, IP address)
-// Error stack traces
-// todo:  PM2
-//todo: /health
-//todo: kafka or rebitMQ
-//todo: throttle
-// todo: Graceful Shutdown
+import { setupGracefulShutdown } from './utils/graceful-shutdown'
+
 async function bootstrap(): Promise<Server> {
   try {
     await AppDataSource.initialize()
@@ -47,17 +31,26 @@ async function bootstrap(): Promise<Server> {
 }
 
 await bootstrap().then((server) => {
-  const gracefulShutdown = (signal: string) => {
-    logger.info(`${signal} signal received: closing HTTP server.`)
-
-    server.close(() => {
-      logger.info('HTTP server closed.')
-    })
-  }
-
-  process.on('SIGTERM', () => gracefulShutdown('SIGTERM'))
-  process.on('SIGINT', () => gracefulShutdown('SIGINT'))
+  setupGracefulShutdown(server)
 })
+
+//todo: Add CI/CD
+//todo: unit, integ, e2e
+//todo: profiler
+//todo: Nginx
+//todo: helmet
+//todo: express-rate-limit.
+//todo: AWS Secrets Manager
+//todo: Node.js Inspector with Chrome DevTools.
+//todo: Timestamp
+// Log level (e.g., info, warn, error)
+// A descriptive message
+// Request context (e.g., request ID, user ID, IP address)
+// Error stack traces
+// todo:  PM2
+//todo: /health
+//todo: kafka or rebitMQ
+//todo: throttle
 
 /*Я изучил ваш проект. У вас заложена отличная, современная основа:
 
