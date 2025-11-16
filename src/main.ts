@@ -1,5 +1,6 @@
 import 'reflect-metadata'
 import './integrations/config'
+import { Server } from 'http'
 import { app, port, lokiHost } from './app'
 import logger from './integrations/logger'
 
@@ -22,11 +23,8 @@ import { AppDataSource } from './integrations/data-source'
 //todo: kafka or rebitMQ
 //todo: throttle
 // todo: Graceful Shutdown
-async function bootstrap() {
+async function bootstrap(): Promise<Server> {
   try {
-    app.listen(port, () => {
-      logger.info(`Listening port is ${port}`)
-    })
     await AppDataSource.initialize()
     logger.info('Database initialized')
 
@@ -37,13 +35,32 @@ async function bootstrap() {
       logger.error('Failed to initialize Grafana-Loki')
       throw new Error('Failed to initialize Grafana-Loki')
     }
+
+    const server = app.listen(port, () => {
+      logger.info(`Server listening on port ${port}`)
+    })
+    return server
   } catch (err) {
     logger.error('Failed to initialize:', err)
     process.exit(1)
   }
 }
 
-bootstrap()
+await bootstrap().then((server) => {
+  const gracefulShutdown = (signal: string) => {
+    logger.info(`${signal} signal received: closing HTTP server.`)
+
+    // Stop accepting new connections
+    server.close(async () => {
+      logger.info('HTTP server closed.')
+    })
+  }
+
+  // Listen for termination signals
+  process.on('SIGTERM', () => gracefulShutdown('SIGTERM'))
+  process.on('SIGINT', () => gracefulShutdown('SIGINT'))
+})
+
 /*Я изучил ваш проект. У вас заложена отличная, современная основа:
 
 Четкая архитектура: Разделение на Контроллеры, Сервисы и Репозитории (Controller-Service-Repository) — это отлично.

@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, beforeAll } from 'vitest'
 import supertest from 'supertest'
 import { app } from '../app'
 import { DataSource } from 'typeorm'
@@ -10,11 +10,10 @@ import { User } from '../entity/User'
 import { createUserData } from '../helpers/user-factory'
 import { Positions, Roles } from '../types/enums'
 import { UserRepository } from '../repositories/UserRepository'
-import { SuccessResponse } from '../sharable/jsend/SuccessResponse'
 
 const request = supertest(app)
 
-describe('UserController E2E', () => {
+describe('UserController', () => {
   let testDataSource: DataSource
 
   beforeEach(async () => {
@@ -27,7 +26,7 @@ describe('UserController E2E', () => {
     it('should return an empty array when no users exist', async () => {
       const response = await request.get('/user')
       expect(response.status).toBe(200)
-      expect((response.body as SuccessResponse<User[]>).data).toEqual([])
+      expect(response.body).toEqual({ status: 'success', data: [] })
     })
 
     it('should return all users when users exist', async () => {
@@ -49,7 +48,7 @@ describe('UserController E2E', () => {
 
       const response = await request.get('/user')
       expect(response.status).toBe(200)
-      expect((response.body as SuccessResponse<User[]>).data).toHaveLength(2)
+      expect(response.body).toHaveProperty('data.length', 2)
     })
   })
 
@@ -66,7 +65,7 @@ describe('UserController E2E', () => {
 
       const response = await request.get(`/user/${user.id}`)
       expect(response.status).toBe(200)
-      expect((response.body as SuccessResponse<User>).data.id).toBe(user.id)
+      expect(response.body).toHaveProperty('data.id', user.id)
     })
 
     it('should return 404 when user not found', async () => {
@@ -87,9 +86,7 @@ describe('UserController E2E', () => {
 
       const response = await request.post('/user').send(newUser)
       expect(response.status).toBe(200)
-      expect((response.body as SuccessResponse<User>).data).toMatchObject(
-        newUser
-      )
+      expect(response.body).toMatchObject({ data: newUser })
     })
 
     it('should return 422 on validation error', async () => {
@@ -120,9 +117,7 @@ describe('UserController E2E', () => {
 
       const response = await request.put(`/user/${user.id}`).send(updatedData)
       expect(response.status).toBe(200)
-      expect((response.body as SuccessResponse<User>).data.firstName).toBe(
-        'Alicia'
-      )
+      expect(response.body).toHaveProperty('data.firstName', 'Alicia')
     })
   })
 
