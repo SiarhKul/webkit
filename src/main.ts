@@ -50,13 +50,11 @@ await bootstrap().then((server) => {
   const gracefulShutdown = (signal: string) => {
     logger.info(`${signal} signal received: closing HTTP server.`)
 
-    // Stop accepting new connections
-    server.close(async () => {
+    server.close(() => {
       logger.info('HTTP server closed.')
     })
   }
 
-  // Listen for termination signals
   process.on('SIGTERM', () => gracefulShutdown('SIGTERM'))
   process.on('SIGINT', () => gracefulShutdown('SIGINT'))
 })
