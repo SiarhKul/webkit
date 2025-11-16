@@ -19,6 +19,9 @@ import { AppDataSource } from './integrations/data-source'
 // Error stack traces
 // todo:  PM2
 //todo: /health
+//todo: kafka or rebitMQ
+//todo: throttle
+// todo: Graceful Shutdown
 async function bootstrap() {
   try {
     app.listen(port, () => {
