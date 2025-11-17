@@ -34,8 +34,9 @@ await bootstrap().then((server) => {
   setupGracefulShutdown(server)
 })
 
+//todo:done: setupGracefulShutdown
+//todo: unit, integ
 //todo: Add CI/CD Lint -> Test -> Build -> Push Docker Image
-//todo: unit, integ, e2e
 //todo: profiler
 //todo: Nginx
 //todo: helmet
@@ -51,6 +52,6 @@ await bootstrap().then((server) => {
 //todo: /health
 //todo: kafka or rebitMQ
 //todo: throttle
-//todo: setupGracefulShutdown
+
 //todo: request respons logs
 //todo: auth and RBAC (Role-Based Access Control)
