@@ -1,17 +1,20 @@
 import express, { type Application } from 'express'
-import { employeeRouter } from './routes/employee'
-import { userRouter } from './routes/user'
 import bodyParser from 'body-parser'
-import { errorHandler } from './handlers/errorHandler'
+import helmet from 'helmet'
 
+import { userRouter } from './routes/user'
 import { config } from './integrations/config'
+import { errorHandler } from './handlers/errorHandler'
 import { allController } from './controllers/AllController'
+import { employeeRouter } from './routes/employee'
 import { healthRouter } from './routes/health'
 
 const app: Application = express()
+
 const port = config.PORT
 const lokiHost = config.LOKI_HOST
 
+app.use(helmet())
 app.use(bodyParser.json())
 
 app.use(healthRouter)

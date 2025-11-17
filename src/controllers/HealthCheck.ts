@@ -31,10 +31,6 @@ export class HealthCheck {
     )
   }
 
-  /**
-   * Readiness probe - checks if the application is ready to serve traffic
-   * Returns 200 if all critical dependencies are healthy, 503 otherwise
-   */
   static readiness = async (
     _req: Request,
     res: Response,
@@ -54,7 +50,6 @@ export class HealthCheck {
       try {
         const dbStartTime = Date.now()
         if (AppDataSource.isInitialized) {
-          // Perform a simple query to verify connectivity
           await AppDataSource.query('SELECT 1')
           healthStatus.checks.database = {
             status: 'up',
@@ -64,18 +59,18 @@ export class HealthCheck {
           healthStatus.checks.database.status = 'down'
           healthStatus.status = 'unhealthy'
         }
-      } catch (error) {
+      } catch {
         healthStatus.checks.database.status = 'down'
         healthStatus.status = 'unhealthy'
       }
 
-      // Check Loki connectivity (optional, only if configured)
+      // Check Loki connectivity
       if (config.LOG_TO_LOKI && config.LOKI_HOST) {
         try {
           const lokiStartTime = Date.now()
           const response = await fetch(`${config.LOKI_HOST}/ready`, {
             method: 'GET',
-            signal: AbortSignal.timeout(5000), // 5 second timeout
+            signal: AbortSignal.timeout(5000),
           })
           healthStatus.checks.loki = {
             status: response.ok ? 'up' : 'down',
@@ -84,7 +79,7 @@ export class HealthCheck {
           if (!response.ok) {
             healthStatus.status = 'unhealthy'
           }
-        } catch (error) {
+        } catch {
           healthStatus.checks.loki = { status: 'down' }
           healthStatus.status = 'unhealthy'
         }

@@ -35,7 +35,8 @@ await bootstrap().then((server) => {
 })
 
 //todo:done: setupGracefulShutdown
-//todo: unit, integ
+//todo:done: unit, integration tests
+//todo:done: /health
 //todo: Add CI/CD Lint -> Test -> Build -> Push Docker Image
 //todo: profiler
 //todo: Nginx
@@ -49,7 +50,7 @@ await bootstrap().then((server) => {
 // Request context (e.g., request ID, user ID, IP address)
 // Error stack traces
 // todo:  PM2
-//todo: /health
+
 //todo: kafka or rebitMQ
 //todo: throttle
 
