@@ -37,11 +37,12 @@ await bootstrap().then((server) => {
 //todo:done: setupGracefulShutdown
 //todo:done: unit, integration tests
 //todo:done: /health
+//todo:done helmet
 //todo: Add CI/CD Lint -> Test -> Build -> Push Docker Image
 //todo: profiler
 //todo: Nginx
-//todo: helmet
 //todo: express-rate-limit.
+//todo: express-slow-down
 //todo: AWS Secrets Manager
 //todo: Node.js Inspector with Chrome DevTools.
 //todo: Logger with: Timestamp
@@ -54,5 +55,5 @@ await bootstrap().then((server) => {
 //todo: kafka or rebitMQ
 //todo: throttle
 
-//todo: request respons logs
+//todo: request/response logs
 //todo: auth and RBAC (Role-Based Access Control)
