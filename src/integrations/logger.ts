@@ -2,7 +2,7 @@ import winston from 'winston'
 import LokiTransport from 'winston-loki'
 import { config } from './config'
 
-const { combine, timestamp, printf, colorize, splat } = winston.format
+const { combine, timestamp, printf, colorize, splat, json } = winston.format
 
 const consoleFormat = combine(
   colorize(),
@@ -38,7 +38,7 @@ if (config.LOG_TO_LOKI && config.LOKI_HOST) {
       labels: { app: `be-${config.NODE_ENV}-webkit` },
       json: true,
       replaceTimestamp: true,
-      format: winston.format.json(),
+      format: combine(splat(), json({ space: 2 })),
       onConnectionError: (err) => console.error(err),
     })
   )

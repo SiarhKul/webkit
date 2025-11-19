@@ -49,7 +49,7 @@ export const errorHandler = (
     message: 'The services handled an uncaught error',
   })
 
-  logger.error('Uncaught error %o:', {
+  logger.error('Uncaught error: %o', {
     ...ucr,
     data: err,
   })
