@@ -40,15 +40,14 @@ await bootstrap().then((server) => {
 //todo:done helmet
 //todo:dane express-rate-limit.
 //todo:dane express-slow-down
+//todo:dane  Log level (e.g., info, warn, error) descriptive message (e.g., request ID, user ID, IP address)
 //todo: Add CI/CD Lint -> Test -> Build -> Push Docker Image
 //todo: profiler
 //todo: Nginx
 //todo: AWS Secrets Manager
 //todo: Node.js Inspector with Chrome DevTools.
 //todo: Logger with: Timestamp
-// Log level (e.g., info, warn, error)
-// A descriptive message
-// Request context (e.g., request ID, user ID, IP address)
+
 // Error stack traces
 // todo:  PM2
 
