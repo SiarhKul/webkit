@@ -38,11 +38,11 @@ await bootstrap().then((server) => {
 //todo:done: unit, integration tests
 //todo:done: /health
 //todo:done helmet
+//todo:dane express-rate-limit.
+//todo:dane express-slow-down
 //todo: Add CI/CD Lint -> Test -> Build -> Push Docker Image
 //todo: profiler
 //todo: Nginx
-//todo: express-rate-limit.
-//todo: express-slow-down
 //todo: AWS Secrets Manager
 //todo: Node.js Inspector with Chrome DevTools.
 //todo: Logger with: Timestamp

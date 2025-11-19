@@ -33,13 +33,13 @@ export const errorHandler = (
     }
 
     if (err.code === ErrorCodes.ENTITY_NOT_FOUND) {
-      return res.status(err.statusCode).json(
-        new ErrorResponse({
-          code: err.code,
-          name: 'Entity not found',
-          message: err.message,
-        })
-      )
+      const errorResponse = new ErrorResponse({
+        code: err.code,
+        name: 'Entity not found',
+        message: err.message,
+      })
+      logger.error('Entity not found: %o', errorResponse)
+      return res.status(err.statusCode).json(errorResponse)
     }
   }
 

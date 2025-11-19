@@ -38,6 +38,7 @@ if (config.LOG_TO_LOKI && config.LOKI_HOST) {
       labels: { app: `be-${config.NODE_ENV}-webkit` },
       json: true,
       replaceTimestamp: true,
+      format: winston.format.json(),
       onConnectionError: (err) => console.error(err),
     })
   )
