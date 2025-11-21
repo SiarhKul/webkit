@@ -4,7 +4,7 @@ import { ErrorCodes } from '../sharable/jsend/ErrorCodes'
 
 export const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 minutes
-  limit: 2, // Limit each IP to 20 requests per windowMs
+  limit: 20, // Limit each IP to 20 requests per windowMs
   standardHeaders: true,
   legacyHeaders: false,
   message: () => {

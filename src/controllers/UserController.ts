@@ -29,7 +29,7 @@ export class UserController {
 
   static getAllUsers = async (_req: Request, res: Response) => {
     const users = await UserService.getAllUsers()
-
+    logger.info('TEST')
     res.status(200).json(new SuccessResponse<User[]>(users))
   }
 

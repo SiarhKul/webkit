@@ -38,21 +38,19 @@ await bootstrap().then((server) => {
 //todo:done: unit, integration tests
 //todo:done: /health
 //todo:done helmet
-//todo:dane express-rate-limit.
-//todo:dane express-slow-down
-//todo:dane  Log level (e.g., info, warn, error) descriptive message (e.g., request ID, user ID, IP address)
+//todo:done express-rate-limit.
+//todo:done express-slow-down
+//todo:done  Log level (e.g., info, warn, error) descriptive message (e.g., request ID, user ID, IP address)
 //todo: Add CI/CD Lint -> Test -> Build -> Push Docker Image
 //todo: profiler
 //todo: Nginx
 //todo: AWS Secrets Manager
 //todo: Node.js Inspector with Chrome DevTools.
-//todo: Logger with: Timestamp
+//todo: Migration one column
 
 // Error stack traces
 // todo:  PM2
-
 //todo: kafka or rebitMQ
 //todo: throttle
-
 //todo: request/response logs
 //todo: auth and RBAC (Role-Based Access Control)
