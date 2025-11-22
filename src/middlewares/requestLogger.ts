@@ -18,7 +18,7 @@ export const requestMiddleware = (
   req.startTime = Date.now()
 
   res.setHeader('X-Request-ID', requestId)
-
+  console.log('------------------')
   const { method, url, body, query, headers, ip } = req
 
   const userAgent = headers['user-agent'] || 'Unknown'
