@@ -42,8 +42,8 @@ await bootstrap().then((server) => {
 //todo:done express-slow-down
 //todo:done  Log level (e.g., info, warn, error) descriptive message (e.g., request ID, user ID, IP address)
 //todo:done Node.js Inspector with Chrome DevTools.
-//todo: Add CI/CD Lint -> Test -> Build -> Push Docker Image
 //todo: profiler
+//todo: Add CI/CD Lint -> Test -> Build -> Push Docker Image
 //todo: Nginx
 //todo: AWS Secrets Manager
 
