@@ -49,6 +49,6 @@ await bootstrap().then((server) => {
 //todo: Nginx
 //todo: AWS Secrets Manager
 //todo: Migration one column
-//todo:  PM2
+//todo: PM2
 //todo: kafka or rebitMQ
 //todo: auth and RBAC (Role-Based Access Control)
