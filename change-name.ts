@@ -10,15 +10,13 @@ async function fixUserNamesInBatches() {
   }
   console.log('START: Database connected successfully.')
 
-  // 1. Check how many records exist with first_name = 'Siarhei'
   const countResult: unknown = await AppDataSource.query(
     `SELECT count(*) as cnt FROM "user" WHERE first_name = $1`,
-    ['Siarhei']
+    ['Sia']
   )
   console.log(`Found candidates for update (Siarhei): ${countResult[0].cnt}`)
 
   do {
-    // 2. Main query: Select by first_name, Update first_name
     const result: unknown = await AppDataSource.query(
       `
         WITH rows_to_update AS (
@@ -33,10 +31,9 @@ async function fixUserNamesInBatches() {
         WHERE id IN (SELECT id FROM rows_to_update)
         RETURNING id;
       `,
-      ['Siarhei', BATCH_SIZE, 'Sia']
+      ['Sia', BATCH_SIZE, 'Siarhei']
     )
 
-    // In Postgres/TypeORM, result[1] contains the number of affected rows
     affected = result[1]
     totalUpdated += affected
 

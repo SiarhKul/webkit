@@ -13,6 +13,7 @@
     "start:prod": "cross-env NODE_ENV=production tsx src/main.ts",
     "prepare": "husky",
     "typeorm": "typeorm-ts-node-esm",
+    "migration:create": "npm run typeorm -- migration:create",
     "migration:generate": "npm run typeorm -- migration:generate -d src/integrations/data-source.ts",
     "migration:run": "npm run typeorm -- migration:run -d src/integrations/data-source.ts",
     "migration:revert": "npm run typeorm -- migration:revert -d src/integrations/data-source.ts",

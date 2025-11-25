@@ -132,6 +132,9 @@ Note: Keep `DB_SYNCHRONIZE=false` in non-development environments. Use migration
 Typical flow:
 
 ```sh
+# Create
+npm run migration:create src/migration/<MigrationName>
+
 # Generate migration from entity changes
 npm run migration:generate -- src/migration/<MigrationName>
 

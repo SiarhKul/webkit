@@ -9,14 +9,13 @@ function getRandomEnumValue<T>(enumObject: T): T[keyof T] {
   return values[Math.floor(Math.random() * values.length)] as T[keyof T]
 }
 
-// Generate a single fake user
 function generateFakeUser(): User {
   const user = new User()
   const firstName = faker.person.firstName()
   const lastName = faker.person.lastName()
 
-  user.firstName = firstName
-  user.lastName = lastName
+  user.firstName = faker.person.firstName()
+  user.lastName = faker.person.lastName()
   user.email = faker.internet.email({ firstName, lastName })
   user.password = faker.internet.password({ length: 12 })
   user.role = getRandomEnumValue(Roles)
@@ -25,7 +24,6 @@ function generateFakeUser(): User {
   return user
 }
 
-// Main seed function
 async function seedUsers(count: number = 50): Promise<void> {
   try {
     console.log('Initializing database connection...')
@@ -34,7 +32,6 @@ async function seedUsers(count: number = 50): Promise<void> {
 
     const userRepository = AppDataSource.getRepository(User)
 
-    // Check if users already exist
     const existingUsersCount = await userRepository.count()
     console.log(`Existing users in database: ${existingUsersCount}`)
 
@@ -54,14 +51,13 @@ async function seedUsers(count: number = 50): Promise<void> {
     console.log(`Total users in database: ${totalUsers}`)
 
     await AppDataSource.destroy()
-    console.log('Database connection closed')
+    console.log('Deatabase connection closed')
   } catch (error) {
     console.error('Error seeding users:', error)
     process.exit(1)
   }
 }
 
-// Get count from command line argument or use default
 const count = process.argv[2] ? parseInt(process.argv[2], 10) : 50
 
 if (isNaN(count) || count <= 0) {
