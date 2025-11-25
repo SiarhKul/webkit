@@ -1,23 +1,29 @@
 import { AppDataSource } from './src/integrations/data-source'
+import logger from './src/integrations/logger'
 
 async function fixUserNamesInBatches() {
-  const BATCH_SIZE = 10000
+  const BATCH_SIZE = 2
   let totalUpdated = 0
   let affected = 0
 
   await AppDataSource.initialize()
+  console.log('START')
 
-  console.log('Начинаем пакетное обновление через Raw SQL...')
+  const count: unknown = await AppDataSource.query(`
+  Select * from "user" where first_name='Siarhei'
+  `)
+
+  console.log('COUNT', count)
 
   do {
-    const result = await AppDataSource.query(
+    const result: unknown = await AppDataSource.query(
       `
             WITH rows_to_update AS (
                 SELECT id 
                 FROM "user" 
                 WHERE user_name = $1 
                 LIMIT $2
-                FOR UPDATE SKIP LOCKED -- Опционально: позволяет запускать скрипт в несколько потоков
+                FOR UPDATE SKIP LOCKED 
             )
             UPDATE "user" 
             SET user_name = $3 
@@ -25,20 +31,15 @@ async function fixUserNamesInBatches() {
         `,
       ['Siarhei', BATCH_SIZE, 'Sia']
     )
+    console.log('result-----', result)
 
     affected = result[1]
     totalUpdated += affected
-
-    console.log(
-      `Пакет обработан. Обновлено: ${affected}. Всего: ${totalUpdated}`
-    )
 
     if (affected > 0) {
       await new Promise((resolve) => setTimeout(resolve, 100))
     }
   } while (affected > 0)
-
-  console.log(`Готово! Всего обновлено записей: ${totalUpdated}`)
 }
 
 fixUserNamesInBatches().catch(console.error)
