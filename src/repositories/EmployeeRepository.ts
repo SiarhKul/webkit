@@ -1,6 +1,6 @@
 class EmployeeRepository {
-  static async getAllEmployees() {
-    return [{ id: 1 }, { id: 2 }]
+  static getAllEmployees() {
+    return Promise.resolve([{ id: 1 }, { id: 2 }])
   }
 }
 

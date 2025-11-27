@@ -22,7 +22,7 @@ interface HealthStatus {
 }
 
 export class HealthCheck {
-  static liveness = (_req: Request, res: Response, _: NextFunction) => {
+  static liveness = (_req: Request, res: Response) => {
     return res.status(200).json(
       new SuccessResponse({
         status: 'alive',
