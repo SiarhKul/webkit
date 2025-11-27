@@ -43,12 +43,11 @@ await bootstrap().then((server) => {
 //todo:done  Log level (e.g., info, warn, error) descriptive message (e.g., request ID, user ID, IP address)
 //todo:done Node.js Inspector with Chrome DevTools.
 //todo:done request/response logs
-//todo: Change incorrect value in column
+//todo:done Update 5000000 records in thd DB. Use bunch update
 //todo: profiler
 //todo: Add CI/CD Lint -> Test -> Build -> Push Docker Image
 //todo: Nginx
 //todo: AWS Secrets Manager
-//todo: Migration one column
 //todo: PM2
 //todo: kafka or rebitMQ
 //todo: auth and RBAC (Role-Based Access Control)
