@@ -7,6 +7,7 @@
     "build": "tsc",
     "prof:cpu": "cross-env NODE_ENV=local tsx --prof --inspect=0.0.0.0:9229 -r ts-node/register src/main.ts",
     "start:local": "cross-env NODE_ENV=local tsx --watch src/main.ts",
+    "start:local:migratin": "npm run migration:run && npm run start:local",
     "start:debug": "cross-env NODE_ENV=local tsx --watch --inspect=127.0.0.1:9210 src/main.ts",
     "start:test": "cross-env NODE_ENV=test tsx watch src/main.ts",
     "start:dev": "cross-env NODE_ENV=development tsx watch src/main.ts",

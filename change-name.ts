@@ -31,7 +31,7 @@ async function fixUserNamesInBatches() {
         WHERE id IN (SELECT id FROM rows_to_update)
         RETURNING id;
       `,
-      ['Sia', BATCH_SIZE, 'Siarhei']
+      ['Siahei', BATCH_SIZE, 'Siar']
     )
 
     affected = result[1]
