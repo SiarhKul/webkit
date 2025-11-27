@@ -5,6 +5,9 @@
   "main": "main.js",
   "scripts": {
     "build": "tsc",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "prof:cpu": "cross-env NODE_ENV=local tsx --prof --inspect=0.0.0.0:9229 -r ts-node/register src/main.ts",
     "start:local": "cross-env NODE_ENV=local tsx --watch src/main.ts",
     "start:local:migratin": "npm run migration:run && npm run start:local",
@@ -22,8 +25,6 @@
     "test": "vitest --run",
     "test:unit": "vitest --project unit",
     "test:integ": "vitest --project integ",
-    "test:e2e": "vitest --project e2e",
-    "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage"
   },
   "keywords": [],
