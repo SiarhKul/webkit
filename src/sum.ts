@@ -1,4 +1,4 @@
-export function sum(a, b) {
+export function sum(a: number, b: number): number {
   console.log('res:', a + b)
   return a + b
 }

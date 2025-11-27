@@ -23,7 +23,7 @@ export class BunchRenaming1764102262124 implements MigrationInterface {
         )
       }
 
-      const result: any = await queryRunner.query(
+      const result: unknown = await queryRunner.query(
         `
           WITH rows_to_update AS (
             SELECT id
@@ -80,7 +80,7 @@ export class BunchRenaming1764102262124 implements MigrationInterface {
         )
       }
 
-      const result: any = await queryRunner.query(
+      const result: unknown = await queryRunner.query(
         `
           WITH rows_to_update AS (
             SELECT id
