@@ -20,6 +20,9 @@
     "migration:revert": "npm run typeorm -- migration:revert -d src/integrations/data-source.ts",
     "seed:users": "tsx src/scripts/seed-users.ts",
     "test": "vitest --run",
+    "test:unit": "vitest --project unit",
+    "test:integ": "vitest --project integ",
+    "test:e2e": "vitest --project e2e",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage"
   },

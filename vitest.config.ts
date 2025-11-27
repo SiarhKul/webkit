@@ -19,6 +19,12 @@ export default defineConfig({
           setupFiles: ['./src/integrations/testcontainer/setup.ts'],
         },
       },
+      {
+        test: {
+          name: { label: 'e2e', color: 'blue' },
+          include: ['**/*.e2e.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+        },
+      },
     ],
     coverage: {
       provider: 'v8',
