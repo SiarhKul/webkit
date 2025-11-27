@@ -31,6 +31,7 @@ jobs:
 
   unit-test:
     name: Unit Tests
+    needs: lint-and-format
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
