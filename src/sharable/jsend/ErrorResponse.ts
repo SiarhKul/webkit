@@ -4,14 +4,14 @@ export class ErrorResponse<T extends Record<string, unknown>> {
     name: string
     message: string
     code: string
-    data?: unknown | T
+    data?: T
   }
 
   constructor(options: {
     name: string
     message: string
     code: string
-    data?: unknown | T
+    data?: T
   }) {
     this.error = {
       name: options.name,
