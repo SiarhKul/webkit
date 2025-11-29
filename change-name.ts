@@ -1,4 +1,4 @@
-import { AppDataSource } from './src/integrations/data-source'
+import { AppDataSource } from './src/integrations/postgress/data-source'
 
 async function fixUserNamesInBatches() {
   const BATCH_SIZE = 5000

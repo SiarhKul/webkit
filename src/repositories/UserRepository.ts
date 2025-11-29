@@ -1,5 +1,5 @@
 import { User } from '../entity/User'
-import { AppDataSource } from '../integrations/data-source'
+import { AppDataSource } from '../integrations/postgress/data-source'
 import { QueryFailedError } from 'typeorm'
 import { AppError } from '../sharable/AppError'
 import { ErrorCodes } from '../sharable/jsend/ErrorCodes'

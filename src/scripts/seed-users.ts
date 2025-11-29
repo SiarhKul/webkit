@@ -1,4 +1,4 @@
-import { AppDataSource } from '../integrations/data-source.js'
+import { AppDataSource } from '../integrations/postgress/data-source'
 import { User } from '../entity/User.js'
 import { Roles, Positions } from '../types/enums/index.js'
 import { faker } from '@faker-js/faker'

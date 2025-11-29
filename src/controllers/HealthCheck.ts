@@ -1,6 +1,6 @@
 import { SuccessResponse } from '../sharable/jsend/SuccessResponse'
 import { Request, Response, NextFunction } from 'express'
-import { AppDataSource } from '../integrations/data-source'
+import { AppDataSource } from '../integrations/postgress/data-source'
 import { config } from '../integrations/config'
 
 const startTime = Date.now()

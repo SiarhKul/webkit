@@ -4,6 +4,11 @@
       "type": "stdio",
       "command": "npx",
       "args": ["nx", "mcp"]
+    },
+    "eslint": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-eslint"]
     }
   },
   "contextFileName": "AGENTS.md"

@@ -1,38 +1,28 @@
 import 'reflect-metadata'
 import './integrations/config'
-import { Server } from 'http'
-import { app, port, lokiHost } from './app'
+import { startServer } from './server'
+import { initializeDatabase } from './integrations/postgress/database'
+import { checkLokiHealth } from './integrations/loki'
 import logger from './integrations/logger'
 
-import { AppDataSource } from './integrations/data-source'
-import { setupGracefulShutdown } from './utils/graceful-shutdown'
-
-async function bootstrap(): Promise<Server> {
+async function bootstrap(): Promise<void> {
   try {
-    await AppDataSource.initialize()
-    logger.info('Database initialized')
+    await initializeDatabase()
 
-    const res = await fetch(`${lokiHost}/ready`)
-    if (res.ok) {
-      logger.info('Grafana-Loki initialized %o', res)
-    } else {
-      logger.error('Failed to initialize Grafana-Loki')
-      throw new Error('Failed to initialize Grafana-Loki')
+    const lokiOk = await checkLokiHealth()
+    if (!lokiOk) {
+      logger.error('Loki health check failed')
+      process.exit(1)
     }
 
-    const server = app.listen(port, () => {
-      logger.info(`Server listening on port ${port}`)
-    })
-    return server
+    startServer()
   } catch (err) {
     logger.error('Failed to initialize:', err)
     process.exit(1)
   }
 }
 
-await bootstrap().then((server) => {
-  setupGracefulShutdown(server)
-})
+await bootstrap().then(() => logger.info('Server is started'))
 
 //todo:done: setupGracefulShutdown
 //todo:done: unit, integration tests
