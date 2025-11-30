@@ -34,8 +34,8 @@ await bootstrap().then(() => logger.info('Server is started'))
 //todo:done Node.js Inspector with Chrome DevTools.
 //todo:done request/response logs
 //todo:done Update 5000000 records in thd DB. Use bunch update
+//todo:done Add CI/CD Lint -> Test -> Build -> Push Docker Image
 //todo: profiler
-//todo: Add CI/CD Lint -> Test -> Build -> Push Docker Image
 //todo: Nginx
 //todo: AWS Secrets Manager
 //todo: PM2
