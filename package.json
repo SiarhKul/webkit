@@ -25,7 +25,16 @@
     "test": "vitest --run",
     "test:unit": "vitest --project unit",
     "test:integ": "vitest --project integ",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "pm2": "pm2 start ecosystem.config.cjs --env production",
+    "pm2:start": "pm2 start ecosystem.config.cjs --env production",
+    "pm2:dev": "pm2 start ecosystem.config.cjs --env development",
+    "pm2:stop": "pm2 stop ecosystem.config.cjs",
+    "pm2:restart": "pm2 restart ecosystem.config.cjs",
+    "pm2:monitor": "pm2 monitor",
+    "pm2:list": "pm2 list",
+    "pm2:logs": "pm2 logs",
+    "pm2:delete": "pm2 delete ecosystem.config.cjs"
   },
   "keywords": [],
   "author": "",
