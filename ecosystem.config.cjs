@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'webkit-main',
+      name: 'webkit',
       script: './build/src/main.js',
       cwd: __dirname,
       instances: 'max', // Use all CPU cores
@@ -13,6 +13,32 @@ module.exports = {
       },
       env_production: {
         NODE_ENV: 'production',
+      },
+      env_local: {
+        NODE_ENV: 'local',
+        PORT: 3002,
+        DB_HOST: 'localhost',
+        DB_PORT: 5432,
+        DB_USER: 'user',
+        DB_PASSWORD: 'password',
+        DB_NAME: 'db-webkit',
+        DB_LOGGING: false,
+        DB_SYNCHRONIZE: true,
+        LOKI_HOST: 'http://localhost:3100',
+        LOG_TO_LOKI: true,
+      },
+      env_development: {
+        NODE_ENV: 'development',
+        PORT: 3002,
+        DB_HOST: 'localhost',
+        DB_PORT: 5432,
+        DB_USER: 'user',
+        DB_PASSWORD: 'password',
+        DB_NAME: 'db-webkit',
+        DB_LOGGING: false,
+        DB_SYNCHRONIZE: true,
+        LOKI_HOST: 'http://localhost:3100',
+        LOG_TO_LOKI: true,
       },
       error_file: './logs/pm2-error.log',
       out_file: './logs/pm2-out.log',
