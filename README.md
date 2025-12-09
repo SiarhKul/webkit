@@ -38,7 +38,7 @@ npm install
 
 ### 2) Start PostgreSQL with Docker (recommended)
 
-A ready-to-use docker-compose file is provided.
+A ready-to-use `docker-compose.yml` file is provided.
 
 ```sh
 # In PowerShell or your shell of choice
@@ -97,7 +97,7 @@ Or simply:
 npm start
 ```
 
-The server listens on port 3002.
+The server listens on port `3002` by default (see `src/app.ts` if you changed it).
 
 ## Scripts
 
@@ -108,6 +108,22 @@ Defined in `package.json`:
 - `npm run migration:generate` — generate a migration from current model changes
 - `npm run migration:run` — run pending migrations
 - `npm run migration:revert` — revert the last migration
+
+Migration workflow example:
+
+```sh
+# Create an empty migration file
+npm run migration:create -- src/migration/MyMigration
+
+# Generate migration from entity changes
+npm run migration:generate -- src/migration/add-email
+
+# Run pending migrations
+npm run migration:run
+
+# Revert last migration
+npm run migration:revert
+```
 
 ## Configuration (Environment Variables)
 
@@ -123,18 +139,17 @@ The TypeORM DataSource (src\integrations\data-source.ts) uses:
 
 Note: Keep `DB_SYNCHRONIZE=false` in non-development environments. Use migrations to manage schema.
 
+npm run migration:generate -- src/migration/add-email
+
 ## Database and Migrations
 
-- DataSource file: `src\integrations\data-source.ts`
-- Entities: currently `src\entity\User.ts`
+- DataSource file: `src/integrations/data-source.ts`
+- Entities: currently `src/entity/User.ts`
 - Migrations directory: `src/migration/*.ts` (create this folder when generating migrations)
 
-Typical flow:
+Typical flow (examples):
 
 ```sh
-# Create
-npm run migration:create src/migration/<MigrationName>
-
 # Generate migration from entity changes
 npm run migration:generate -- src/migration/<MigrationName>
 
@@ -143,9 +158,6 @@ npm run migration:run
 
 # Revert last migration
 npm run migration:revert
-
-#Example:
-npm run migration:generate -- src/migration/add-email
 ```
 
 If you prefer quick development without migrations, you can temporarily set `DB_SYNCHRONIZE=true` (not recommended for production) to let TypeORM auto-sync the schema based on entities.
@@ -155,8 +167,8 @@ If you prefer quick development without migrations, you can temporarily set `DB_
 Base URL (default): `http://localhost:3002`
 
 - GET `/` — returns a mock list of employees
-  - Controller: `src\controllers\EmployController.ts`
-  - Repository: `src\repositories\EmployeeRepository.ts`
+  - Controller: `src/controllers/EmployController.ts`
+  - Repository: `src/repositories/EmployeeRepository.ts`
 
 Example request:
 
@@ -197,4 +209,6 @@ Example response:
 
 ISC (see package.json).
 
-curl http://localhost:3100/ready
+```sh
+curl http://localhost:3002/ready
+```
