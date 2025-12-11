@@ -41,3 +41,4 @@ await bootstrap().then(() => logger.info('Server is started'))
 //todo: PM2
 //todo: kafka or rebitMQ
 //todo: auth and RBAC (Role-Based Access Control)
+//todd: docker hot reload code changes
