@@ -4,6 +4,7 @@ import { startServer } from './server'
 import { initializeDatabase } from './integrations/postgress/database'
 import { checkLokiHealth } from './integrations/loki'
 import { rabbitMQService } from './integrations/rabbitmq/rabbitmq.service'
+import { initializeRabbitMQConsumers } from './services/RabbitMQConsumerService'
 import logger from './integrations/logger'
 
 async function bootstrap(): Promise<void> {
@@ -16,6 +17,8 @@ async function bootstrap(): Promise<void> {
     }
 
     await rabbitMQService.initialize()
+
+    await initializeRabbitMQConsumers()
 
     startServer()
   } catch (err) {

@@ -2,22 +2,22 @@ import { rabbitMQConsumerService } from '../integrations/rabbitmq/rabbitmq-consu
 
 class EmployeeRepository {
   static async getAllEmployees() {
-    const queue = 'test-queue'
+    // const queue = 'test-queue'
 
-    await rabbitMQConsumerService.consumeQueue(
-      queue,
-      (message) => {
-        console.log(`Processing message from ${queue}:`, message)
-      },
-      {
-        durable: true,
-        prefetch: 10,
-      }
-    )
-    return {
-      message: `Started consuming queue: ${queue}`,
-    }
-    // return Promise.resolve([{ id: 1 }, { id: 2 }])
+    // await rabbitMQConsumerService.consumeQueue(
+    //   queue,
+    //   (message) => {
+    //     console.log(`Processing message from ${queue}:`, message)
+    //   },
+    //   {
+    //     durable: true,
+    //     prefetch: 10,
+    //   }
+    // )
+    // return {
+    //   message: `Started consuming queue: ${queue}`,
+    // }
+    return Promise.resolve([{ id: 1 }, { id: 2 }])
   }
 }
 
