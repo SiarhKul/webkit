@@ -17,6 +17,7 @@ The project exposes a sample endpoint that returns a mock list of employees and 
   - Start PostgreSQL with Docker
   - Configure environment
   - Run the server
+- RabbitMQ (Message Queue Consumer)
 - Scripts
 - Configuration (Environment Variables)
 - Database and Migrations
@@ -99,6 +100,78 @@ npm start
 
 The server listens on port `3002` by default (see `src/app.ts` if you changed it).
 
+## RabbitMQ (Message Queue Consumer)
+
+The project includes optional RabbitMQ consumer integration for processing asynchronous messages from queues and exchanges.
+
+### Quick Setup
+
+1. **Start RabbitMQ** (included in docker-compose):
+
+```sh
+docker compose up -d rabbitmq
+```
+
+2. **Enable in your environment**:
+
+```env
+RABBITMQ_ENABLED=true
+RABBITMQ_URL=amqp://admin:admin@localhost:5672
+```
+
+3. **Access Management UI**: http://localhost:15672
+   - Username: `admin`
+   - Password: `admin`
+
+### RabbitMQ Configuration
+
+Environment variables:
+
+- `RABBITMQ_ENABLED` (`true` | `false`, default: `false`) - Enable/disable RabbitMQ integration
+- `RABBITMQ_URL` (default: `amqp://admin:admin@localhost:5672`) - Connection URL
+
+### Consumer Examples
+
+The project includes example consumers in `src/services/rabbitmq-consumer-examples.ts`:
+
+```typescript
+// Consume from a simple queue
+await rabbitMQConsumerService.consumeQueue('user.notifications', (message) => {
+  console.log('Processing:', message)
+})
+
+// Consume from exchange with routing pattern
+await rabbitMQConsumerService.consumeExchange(
+  'events',
+  'user.*', // matches user.created, user.updated, etc.
+  'user-events-queue',
+  (message) => {
+    console.log('User event:', message)
+  },
+  'topic'
+)
+```
+
+### Testing Message Consumption
+
+**Via Management UI:**
+
+1. Open http://localhost:15672
+2. Go to **Queues** tab
+3. Click on your queue (e.g., `user.notifications`)
+4. Use **Publish message** section to send a test message
+
+**Check Health Status:**
+
+```sh
+curl http://localhost:3002/ready
+# Shows RabbitMQ connection status in response
+```
+
+For complete documentation, see [`docs/RABBITMQ.md`](docs/RABBITMQ.md).
+
+**Note:** The server will start successfully even if RabbitMQ is unavailable. Set `RABBITMQ_ENABLED=false` if you don't need message queue functionality.
+
 ## Scripts
 
 Defined in `package.json`:
@@ -136,6 +209,11 @@ The TypeORM DataSource (src\integrations\data-source.ts) uses:
 - `DB_NAME` (default: `db-webkit`)
 - `DB_LOGGING` (`true` | `false`, default: `false`)
 - `DB_SYNCHRONIZE` (`true` | `false`, default: `false`)
+
+RabbitMQ configuration:
+
+- `RABBITMQ_ENABLED` (`true` | `false`, default: `false`)
+- `RABBITMQ_URL` (default: `amqp://admin:admin@localhost:5672`)
 
 Note: Keep `DB_SYNCHRONIZE=false` in non-development environments. Use migrations to manage schema.
 

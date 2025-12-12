@@ -3,6 +3,6 @@ import { EmployController } from '../controllers/EmployController.js'
 
 const employeeRouter = express.Router()
 
-employeeRouter.get('/', EmployController.getAllEmployees)
+employeeRouter.get('/employees', EmployController.getAllEmployees)
 
 export { employeeRouter }

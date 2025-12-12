@@ -2,6 +2,7 @@ import { SuccessResponse } from '../sharable/jsend/SuccessResponse'
 import { Request, Response, NextFunction } from 'express'
 import { AppDataSource } from '../integrations/postgress/data-source'
 import { config } from '../integrations/config'
+import { rabbitMQService } from '../integrations/rabbitmq/rabbitmq.service'
 
 const startTime = Date.now()
 
@@ -17,6 +18,10 @@ interface HealthStatus {
     loki?: {
       status: 'up' | 'down'
       responseTime?: number
+    }
+    rabbitmq?: {
+      status: 'up' | 'down' | 'disabled'
+      connected?: boolean
     }
   }
 }
@@ -83,6 +88,24 @@ export class HealthCheck {
           healthStatus.checks.loki = { status: 'down' }
           healthStatus.status = 'unhealthy'
         }
+      }
+
+      // Check RabbitMQ connectivity
+      if (config.RABBITMQ_ENABLED) {
+        try {
+          const isConnected = rabbitMQService.isConnected()
+          healthStatus.checks.rabbitmq = {
+            status: isConnected ? 'up' : 'down',
+            connected: isConnected,
+          }
+          if (!isConnected) {
+            healthStatus.checks.rabbitmq.status = 'down'
+          }
+        } catch {
+          healthStatus.checks.rabbitmq = { status: 'down', connected: false }
+        }
+      } else {
+        healthStatus.checks.rabbitmq = { status: 'disabled' }
       }
 
       const statusCode = healthStatus.status === 'healthy' ? 200 : 503

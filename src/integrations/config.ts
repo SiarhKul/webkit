@@ -35,6 +35,11 @@ const configSchema = z.object({
     .transform((val) => val === 'true')
     .pipe(z.boolean()),
   LOKI_HOST: z.string().url().optional(),
+  RABBITMQ_ENABLED: z
+    .string()
+    .transform((val) => val === 'true')
+    .pipe(z.boolean()),
+  RABBITMQ_URL: z.string().optional(),
 })
 
 const parseConfig = () => {
@@ -51,6 +56,9 @@ const parseConfig = () => {
       DB_SYNCHRONIZE: process.env.DB_SYNCHRONIZE ?? 'false',
       LOG_TO_LOKI: process.env.LOG_TO_LOKI ?? 'false',
       LOKI_HOST: process.env.LOKI_HOST,
+      RABBITMQ_ENABLED: process.env.RABBITMQ_ENABLED ?? 'false',
+      RABBITMQ_URL:
+        process.env.RABBITMQ_URL ?? 'amqp://admin:admin@localhost:5672',
     }
     const variables = configSchema.parse(raw)
     return variables

@@ -3,6 +3,7 @@ import './integrations/config'
 import { startServer } from './server'
 import { initializeDatabase } from './integrations/postgress/database'
 import { checkLokiHealth } from './integrations/loki'
+import { rabbitMQService } from './integrations/rabbitmq/rabbitmq.service'
 import logger from './integrations/logger'
 
 async function bootstrap(): Promise<void> {
@@ -11,9 +12,10 @@ async function bootstrap(): Promise<void> {
 
     const lokiOk = await checkLokiHealth()
     if (!lokiOk) {
-      logger.error('Loki health check failed')
       process.exit(1)
     }
+
+    await rabbitMQService.initialize()
 
     startServer()
   } catch (err) {

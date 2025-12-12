@@ -46,6 +46,21 @@ services:
     networks:
       - monitoring
 
+  # rabbitmq:
+  #   image: rabbitmq:3-management-alpine
+  #   container_name: rabbitmq-container
+  #   restart: always
+  #   ports:
+  #     - '5672:5672'  # AMQP port
+  #     - '15672:15672'  # Management UI
+  #   environment:
+  #     - RABBITMQ_DEFAULT_USER=guest
+  #     - RABBITMQ_DEFAULT_PASS=guest
+  #   volumes:
+  #     - ./rabbitmq-data:/var/lib/rabbitmq
+  #   networks:
+  #     - monitoring
+
 networks:
   monitoring:
     driver: bridge
