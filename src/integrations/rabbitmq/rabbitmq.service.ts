@@ -27,7 +27,7 @@ class RabbitMQService {
 
   private async connect(): Promise<void> {
     try {
-      const url = (config.RABBITMQ_URL as string) || 'amqp://localhost:5672'
+      const url = config.RABBITMQ_URL || 'amqp://localhost:5672'
 
       this.connection = amqpConnectionManager.connect([url])
 
