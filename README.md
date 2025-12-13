@@ -17,6 +17,7 @@ The project exposes a sample endpoint that returns a mock list of employees and 
   - Start PostgreSQL with Docker
   - Configure environment
   - Run the server
+- PM2 (Process Manager)
 - RabbitMQ (Message Queue Consumer)
 - Scripts
 - Configuration (Environment Variables)
@@ -99,6 +100,179 @@ npm start
 ```
 
 The server listens on port `3002` by default (see `src/app.ts` if you changed it).
+
+## PM2 (Process Manager)
+
+PM2 is a production process manager for Node.js applications with a built-in load balancer. This project includes a pre-configured `ecosystem.config.cjs` file for easy deployment and process management.
+
+### Prerequisites
+
+Install PM2 globally:
+
+```sh
+npm install -g pm2
+```
+
+### Quick Start
+
+Before using PM2, build the project:
+
+```sh
+npm run build
+```
+
+Start the application with PM2:
+
+```sh
+# Production environment
+npm run pm2
+
+# Local environment
+npm run pm2:local
+
+# Development environment
+npm run pm2:dev
+```
+
+### PM2 Configuration
+
+The `ecosystem.config.cjs` file configures PM2 with:
+
+- **Cluster Mode**: Runs multiple instances (one per CPU core) for better performance
+- **Max Memory Restart**: Automatically restarts if memory exceeds 512MB
+- **Environment Variables**: Pre-configured for production, local, and development environments
+- **Log Management**: Stores logs in `./logs/pm2-error.log` and `./logs/pm2-out.log`
+
+### Available PM2 Commands
+
+**Start Application:**
+
+```sh
+npm run pm2              # Start in production mode
+npm run pm2:local        # Start in local mode
+npm run pm2:dev          # Start in development mode
+```
+
+**Process Management:**
+
+```sh
+npm run pm2:stop         # Stop the application
+npm run pm2:restart      # Restart the application
+npm run pm2:delete       # Stop and remove from PM2
+```
+
+**Monitoring:**
+
+```sh
+npm run pm2:list         # List all PM2 processes
+npm run pm2:logs         # Display real-time logs
+npm run pm2:monitor      # Open PM2 monitoring dashboard
+```
+
+### Manual PM2 Commands
+
+You can also use PM2 directly:
+
+```sh
+# Start with specific environment
+pm2 start ecosystem.config.cjs --env production
+pm2 start ecosystem.config.cjs --env local
+pm2 start ecosystem.config.cjs --env development
+
+# Monitor processes
+pm2 status              # Show process status
+pm2 logs webkit-app     # Show logs for webkit-app
+pm2 monit               # Open monitoring dashboard
+
+# Process management
+pm2 reload webkit-app   # Reload with zero downtime
+pm2 restart webkit-app  # Restart the application
+pm2 stop webkit-app     # Stop the application
+pm2 delete webkit-app   # Remove from PM2
+
+# View detailed info
+pm2 show webkit-app     # Show detailed process information
+pm2 describe webkit-app # Alias for show
+```
+
+### Environment Variables by Mode
+
+**Production (`--env production`):**
+
+- `NODE_ENV=production`
+- Uses your system's environment variables for database and other configs
+
+**Local (`--env local`):**
+
+- `NODE_ENV=local`
+- `PORT=3002`
+- Database: `localhost:5432/db-webkit`
+- Loki logging enabled (`http://localhost:3100`)
+- `DB_SYNCHRONIZE=true`
+
+**Development (`--env development`):**
+
+- `NODE_ENV=development`
+- Same configuration as local mode
+
+### PM2 Auto-Startup
+
+To configure PM2 to start on system boot:
+
+```sh
+# Generate startup script
+pm2 startup
+
+# Save current process list
+pm2 save
+
+# Disable startup (if needed)
+pm2 unstartup
+```
+
+### Log Management
+
+PM2 logs are stored in:
+
+- Error logs: `./logs/pm2-error.log`
+- Output logs: `./logs/pm2-out.log`
+
+View and manage logs:
+
+```sh
+pm2 logs                 # Stream all logs
+pm2 logs webkit-app      # Stream logs for webkit-app
+pm2 flush                # Clear all logs
+pm2 reloadLogs           # Reload log configuration
+```
+
+### Performance Optimization
+
+The cluster mode configuration automatically:
+
+- Spawns one instance per CPU core (`instances: 'max'`)
+- Load balances incoming requests across instances
+- Provides zero-downtime reloads
+- Restarts crashed processes automatically
+
+### Troubleshooting PM2
+
+**Application won't start:**
+
+- Ensure you've run `npm run build` first
+- Check logs: `npm run pm2:logs`
+- Verify database is running: `docker compose ps`
+
+**High memory usage:**
+
+- Check PM2 status: `npm run pm2:list`
+- Adjust `max_memory_restart` in `ecosystem.config.cjs` if needed
+- Investigate memory leaks in application code
+
+**PM2 command not found:**
+
+- Install PM2 globally: `npm install -g pm2`
+- Or use npx: `npx pm2 <command>`
 
 ## RabbitMQ (Message Queue Consumer)
 
