@@ -40,10 +40,10 @@ await bootstrap().then(() => logger.info('Server is started'))
 //todo:done request/response logs
 //todo:done Update 5000000 records in thd DB. Use bunch update
 //todo:done Add CI/CD Lint -> Test -> Build -> Push Docker Image
+//todd:done docker hot reload code changes
+//todo:done PM2
+//todo:done kafka or rebitMQ
 //todo: profiler
 //todo: Nginx
 //todo: AWS Secrets Manager
-//todo: PM2
-//todo: kafka or rebitMQ
 //todo: auth and RBAC (Role-Based Access Control)
-//todd: docker hot reload code changes
