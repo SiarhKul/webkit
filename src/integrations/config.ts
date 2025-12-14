@@ -42,6 +42,8 @@ const configSchema = z.object({
   RABBITMQ_URL: z.string().optional(),
 })
 
+export type Config = z.infer<typeof configSchema>
+
 const parseConfig = () => {
   try {
     const raw = {
@@ -61,6 +63,9 @@ const parseConfig = () => {
         process.env.RABBITMQ_URL ?? 'amqp://admin:admin@localhost:5672',
     }
     const variables = configSchema.parse(raw)
+
+    console.log('Config:', variables)
+
     return variables
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -72,5 +77,3 @@ const parseConfig = () => {
 }
 
 export const config = parseConfig()
-
-export type Config = z.infer<typeof configSchema>

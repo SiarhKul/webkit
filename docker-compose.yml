@@ -48,8 +48,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        MODE: development
+      target: dev
     container_name: webkit-app-container
     restart: unless-stopped
     ports:
