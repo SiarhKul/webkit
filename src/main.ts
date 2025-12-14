@@ -10,7 +10,7 @@ import logger from './integrations/logger'
 async function bootstrap(): Promise<void> {
   try {
     await initializeDatabase()
-
+    console.log('--------9')
     const lokiOk = await checkLokiHealth()
     if (!lokiOk) {
       process.exit(1)
