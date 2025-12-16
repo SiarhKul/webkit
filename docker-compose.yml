@@ -11,6 +11,11 @@ services:
       - '5432:5432'
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U user -d db-webkit']
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - monitoring
 
@@ -23,6 +28,15 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     volumes:
       - ./loki-data:/loki
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1',
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - monitoring
 
@@ -65,8 +79,8 @@ services:
       - DB_SYNCHRONIZE=false
       - LOG_TO_LOKI=true
       - LOKI_HOST=http://loki:3100
-      # - RABBITMQ_ENABLED=true
-      # - RABBITMQ_URL=amqp://rabbitmq:5672
+      - RABBITMQ_ENABLED=true
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
       # Enable polling for file watching in Docker (Windows compatibility)
       - CHOKIDAR_USEPOLLING=true
       - CHOKIDAR_INTERVAL=1000
@@ -80,9 +94,12 @@ services:
       - /usr/src/app/node_modules
       - /usr/src/app/build
     depends_on:
-      - db-webkit
-      - loki
-      # - rabbitmq
+      db-webkit:
+        condition: service_healthy
+      loki:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     networks:
       - monitoring
 
@@ -98,6 +115,11 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
     volumes:
       - ./rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ['CMD-SHELL', 'rabbitmq-diagnostics -q ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - monitoring
 
