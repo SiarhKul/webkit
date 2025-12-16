@@ -42,7 +42,12 @@ await bootstrap().then(() => logger.info('Server is started'))
 //todo:done Add CI/CD Lint -> Test -> Build -> Push Docker Image
 //todd:done docker hot reload code changes
 //todo:done PM2
-//todo:done kafka or rebitMQ
+//todo:done rabbitMQ
+//todo gRPC
+//todo: rabbitMQ DLX (Dead Letter Exchange)
+//todo: rabbitMQ message TTL
+//todo: rabbitMQ and docker-compose
+
 //todo: profiler
 //todo: Nginx
 //todo: AWS Secrets Manager

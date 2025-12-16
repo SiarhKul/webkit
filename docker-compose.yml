@@ -65,7 +65,8 @@ services:
       - DB_SYNCHRONIZE=false
       - LOG_TO_LOKI=true
       - LOKI_HOST=http://loki:3100
-      - RABBITMQ_ENABLED=false
+      # - RABBITMQ_ENABLED=true
+      # - RABBITMQ_URL=amqp://rabbitmq:5672
       # Enable polling for file watching in Docker (Windows compatibility)
       - CHOKIDAR_USEPOLLING=true
       - CHOKIDAR_INTERVAL=1000
@@ -81,23 +82,24 @@ services:
     depends_on:
       - db-webkit
       - loki
+      # - rabbitmq
     networks:
       - monitoring
 
-  # rabbitmq:
-  #   image: rabbitmq:3-management-alpine
-  #   container_name: rabbitmq-container
-  #   restart: always
-  #   ports:
-  #     - '5672:5672'  # AMQP port
-  #     - '15672:15672'  # Management UI
-  #   environment:
-  #     - RABBITMQ_DEFAULT_USER=guest
-  #     - RABBITMQ_DEFAULT_PASS=guest
-  #   volumes:
-  #     - ./rabbitmq-data:/var/lib/rabbitmq
-  #   networks:
-  #     - monitoring
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    volumes:
+      - ./rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - monitoring
 
 networks:
   monitoring:
