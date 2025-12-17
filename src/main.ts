@@ -35,7 +35,7 @@ await bootstrap().then(() => logger.info('Server is started'))
 //todo:done helmet
 //todo:done express-rate-limit.
 //todo:done express-slow-down(throttle)
-//todo:done  Log level (e.g., info, warn, error) descriptive message (e.g., request ID, user ID, IP address)
+//todo:done Log level (e.g., info, warn, error) descriptive message (e.g., request ID, user ID, IP address)
 //todo:done Node.js Inspector with Chrome DevTools.
 //todo:done request/response logs
 //todo:done Update 5000000 records in thd DB. Use bunch update
@@ -43,10 +43,10 @@ await bootstrap().then(() => logger.info('Server is started'))
 //todd:done docker hot reload code changes
 //todo:done PM2
 //todo:done rabbitMQ
+//todo:done rabbitMQ and docker-compose
 //todo gRPC
 //todo: rabbitMQ DLX (Dead Letter Exchange)
 //todo: rabbitMQ message TTL
-//todo: rabbitMQ and docker-compose
 
 //todo: profiler
 //todo: Nginx

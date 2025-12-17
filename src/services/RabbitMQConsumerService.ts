@@ -9,13 +9,10 @@ export async function initializeRabbitMQConsumers(): Promise<void> {
   try {
     logger.info('Initializing RabbitMQ consumers...')
 
-    // Consumer for test-queue
     await rabbitMQConsumerService.consumeQueue(
       'test-queue',
       (message: unknown) => {
         logger.info('Processing message from test-queue:', message)
-        // Add your business logic here
-        // For example: process employee data, send notifications, etc.
       },
       {
         durable: true,

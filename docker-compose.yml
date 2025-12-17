@@ -85,7 +85,6 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - CHOKIDAR_INTERVAL=1000
     volumes:
-      # Mount source code for hot-reload (read-write so tsx can watch changes)
       - ./src:/usr/src/app/src
       - ./tsconfig.json:/usr/src/app/tsconfig.json
       - ./package.json:/usr/src/app/package.json
