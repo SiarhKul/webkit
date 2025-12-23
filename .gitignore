@@ -3,7 +3,9 @@
 node_modules/
 build/
 tmp/
-temp/!/postgres-data/
+temp/
+src/grpc/generated/
+!/postgres-data/
 ./postgres-data
 loki-data/
 grafana-data/

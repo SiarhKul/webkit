@@ -33,7 +33,7 @@ export class GrpcNotificationService {
     )
   }
 
-  static async sendNotification() {
+  async sendNotification() {
     const request = {
       event_id: `evt_${Date.now()}`,
       user_id: 'user_1234567',
@@ -59,12 +59,8 @@ export class GrpcNotificationService {
         metaData,
         (error: unknown, response) => {
           if (error) {
-            reject(error instanceof Error ? error : new Error(String(error)))
+            reject(error as Error)
           } else {
-            console.log(
-              '[TEST_FILE] ✅ Response:',
-              JSON.stringify(response, null, 2)
-            )
             resolve(response)
           }
         }
