@@ -47,7 +47,8 @@ await bootstrap().then(() => logger.info('Server is started'))
 //todo gRPC
 //todo: rabbitMQ DLX (Dead Letter Exchange)
 //todo: rabbitMQ message TTL
-
+//todo: Middlewares(global, route-specific)
+//todo: Frontent to display users
 //todo: profiler
 //todo: Nginx
 //todo: AWS Secrets Manager

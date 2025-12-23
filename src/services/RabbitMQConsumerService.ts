@@ -23,6 +23,5 @@ export async function initializeRabbitMQConsumers(): Promise<void> {
     logger.info('RabbitMQ consumers initialized successfully')
   } catch (error) {
     logger.error('Error initializing RabbitMQ consumers:', error)
-    // Don't throw - allow server to continue even if consumers fail
   }
 }

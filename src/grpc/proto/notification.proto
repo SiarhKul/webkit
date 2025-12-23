@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package notification;
+
+service NotificationService {
+  rpc SendNotification(SendNotificationRequest) returns (SendNotificationResponse);
+}
+
+// Common types
+enum NotificationType {
+  EMAIL = 0;
+  SMS = 1;
+  PUSH = 2;
+  WEBHOOK = 3;
+}
+
+enum NotificationStatus {
+  PENDING = 0;
+  SENT = 1;
+  DELIVERED = 2;
+  FAILED = 3;
+  RETRY = 4;
+}
+
+enum NotificationPriority {
+  LOW = 0;
+  NORMAL = 1;
+  HIGH = 2;
+  URGENT = 3;
+}
+
+// Send single notification
+message SendNotificationRequest {
+  string event_id = 1;           // Unique event identifier
+  string user_id = 2;            // Recipient user ID
+  NotificationType type = 3;     // Notification type
+  string template_id = 4;        // Template identifier
+  map<string, string> payload = 5; // Template variables
+  NotificationPriority priority = 6;
+  int32 retry_count = 7;         // Max retry attempts
+  int32 timeout_ms = 8;          // Timeout in milliseconds
+  map<string, string> metadata = 9; // Auth/tracking metadata
+}
+
+message SendNotificationResponse {
+  bool success = 1;
+  string notification_id = 2;
+  string message = 3;
+  NotificationStatus status = 4;
+  int64 timestamp = 5;
+}
+
