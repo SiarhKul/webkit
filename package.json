@@ -23,7 +23,8 @@
     "migration:revert": "npm run typeorm -- migration:revert -d src/integrations/postgress/data-source.ts",
     "seed:users": "tsx src/scripts/seed-users.ts",
     "grpc:gen": "npx ts-proto src/grpc/proto/notification.proto --output_dir=src/grpc/generated --outputDir=src/grpc/generated",
-    "grpc:generate": "node setup-protoc.js",
+    "grpc:gen2": "grpc_tools_node_protoc --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=src/grpc/generated --ts_proto_opt=outputServices=grpc-js,esModuleInterop=true --proto_path=src/grpc/proto src/grpc/proto/*.proto",
+    "grpc:ge": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=. ./simple.p",
     "test": "vitest --run",
     "test:unit": "vitest --project unit",
     "test:integ": "vitest --project integ",
@@ -36,7 +37,8 @@
     "pm2:monitor": "pm2 monitor",
     "pm2:list": "pm2 list",
     "pm2:logs": "pm2 logs",
-    "pm2:delete": "pm2 delete ecosystem.config.cjs"
+    "pm2:delete": "pm2 delete ecosystem.config.cjs",
+    "gen": ".\\protoc_install\\bin\\protoc.exe --plugin=protoc-gen-ts_proto=.\\node_modules\\.bin\\protoc-gen-ts_proto.cmd --ts_proto_out=.\\src\\grpc\\generated --ts_proto_opt=outputServices=grpc-js,esModuleInterop=true -I .\\src\\grpc\\proto .\\src\\grpc\\proto\\notification.proto"
   },
   "keywords": [],
   "author": "",
