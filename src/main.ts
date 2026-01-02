@@ -44,6 +44,7 @@ await bootstrap().then(() => logger.info('Server is started'))
 //todo:done PM2
 //todo:done rabbitMQ
 //todo:done rabbitMQ and docker-compose
+//todo: proto grpc
 //todo gRPC
 //todo: rabbitMQ DLX (Dead Letter Exchange)
 //todo: rabbitMQ message TTL
