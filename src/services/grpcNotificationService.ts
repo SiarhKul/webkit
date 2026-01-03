@@ -1,51 +1,36 @@
-import { join } from 'path'
-import { loadSync } from '@grpc/proto-loader'
+import { credentials, Metadata } from '@grpc/grpc-js'
 import {
-  loadPackageDefinition,
-  credentials,
-  ServiceClientConstructor,
-  Client,
-  GrpcObject,
-  Metadata,
-} from '@grpc/grpc-js'
+  NotificationServiceClient,
+  SendNotificationRequest,
+  SendNotificationResponse,
+  NotificationType,
+  NotificationPriority,
+} from '../grpc/generated/notification.js'
 
 export class GrpcNotificationService {
   private GRPC_URL = 'localhost:50051'
-  private PROTO_PATH = join(__dirname, '../grpc/proto/notification.proto')
-  private packageDefinition = loadSync(this.PROTO_PATH, {
-    keepCase: true,
-    longs: String,
-    enums: String,
-    defaults: true,
-    oneofs: true,
-  })
-  private prodotoDescriptor = loadPackageDefinition(this.packageDefinition)
-  private notificationProto = this.prodotoDescriptor.notification as GrpcObject
-  private client: Client
+  private client: NotificationServiceClient
 
   constructor() {
-    const NotificationServiceConstructor = this.notificationProto
-      .NotificationService as ServiceClientConstructor
-
-    this.client = new NotificationServiceConstructor(
+    this.client = new NotificationServiceClient(
       this.GRPC_URL,
       credentials.createInsecure()
     )
   }
 
-  async sendNotification() {
-    const request = {
-      event_id: `evt_${Date.now()}`,
-      user_id: 'user_1234567',
-      type: 'EMAIL',
-      template_id: 'welcome_email',
+  async sendNotification(): Promise<SendNotificationResponse> {
+    const request: SendNotificationRequest = {
+      eventId: `evt_${Date.now()}`,
+      userId: 'user_1234567',
+      type: NotificationType.EMAIL,
+      templateId: 'welcome_email',
       payload: {
         user_name: 'John Doe',
         activation_link: 'https://example.com/activate/abc123',
       },
-      priority: 'HIGH',
-      retry_count: 3,
-      timeout_ms: 5000,
+      priority: NotificationPriority.HIGH,
+      retryCount: 3,
+      timeoutMs: 5000,
       metadata: {},
     }
 
@@ -54,17 +39,13 @@ export class GrpcNotificationService {
     metaData.add('x-request-id', `req_${Date.now()}`)
 
     return new Promise((resolve, reject) => {
-      this.client.SendNotification(
-        request,
-        metaData,
-        (error: unknown, response) => {
-          if (error) {
-            reject(error as Error)
-          } else {
-            resolve(response)
-          }
+      this.client.sendNotification(request, metaData, (error, response) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve(response)
         }
-      )
+      })
     })
   }
 }

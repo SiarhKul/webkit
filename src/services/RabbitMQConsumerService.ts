@@ -1,10 +1,6 @@
 import { rabbitMQConsumerService } from '../integrations/rabbitmq/rabbitmq-consumer.service'
 import logger from '../integrations/logger'
 
-/**
- * Initialize RabbitMQ consumers
- * This should be called once during application startup
- */
 export async function initializeRabbitMQConsumers(): Promise<void> {
   try {
     logger.info('Initializing RabbitMQ consumers...')

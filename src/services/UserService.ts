@@ -1,11 +1,18 @@
 import { UserRepository } from '../repositories/UserRepository'
 import { User } from '../entity/User'
+import { GrpcNotificationService } from './grpcNotificationService'
 
 export type { Request, Response } from 'express'
 
 export class UserService {
+  static grpcNotificationService = new GrpcNotificationService()
+
   static async sighIn(user: User): Promise<User> {
-    return await UserRepository.sighIn(user)
+    const signedUser = await UserRepository.sighIn(user)
+
+    await this.grpcNotificationService.sendNotification()
+
+    return signedUser
   }
 
   static async getAllUsers(): Promise<User[]> {

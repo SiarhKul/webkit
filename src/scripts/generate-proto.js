@@ -1,8 +1,7 @@
-// scripts/generate-proto.js
-console.log('1')
 import { execSync } from 'child_process'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
+import { existsSync, mkdirSync } from 'fs'
 
 console.log('Generating TypeScript from .proto files...')
 
@@ -12,15 +11,11 @@ const __dirname = dirname(__filename)
 const protoDir = join(__dirname, '../grpc/proto')
 const outputDir = join(__dirname, '../grpc/generated')
 
-// Ensure output directory exists
-import { existsSync, mkdirSync } from 'fs'
 if (!existsSync(outputDir)) {
   mkdirSync(outputDir, { recursive: true })
 }
 
 try {
-  // Generate TypeScript files
-  // Use .cmd extension on Windows for the plugin and absolute path
   const isWindows = process.platform === 'win32'
   const pluginExt = isWindows ? '.cmd' : ''
   const pluginPath = join(
