@@ -22,12 +22,12 @@ export class GrpcNotificationService {
   async sendNotification(): Promise<SendNotificationResponse> {
     const request: SendNotificationRequest = {
       eventId: `evt_${Date.now()}`,
-      userId: 'user_1234567',
+      userId: 'user_SK_123',
       type: NotificationType.EMAIL,
-      templateId: 'welcome_email',
+      templateId: 'SK_email',
       payload: {
-        user_name: 'John Doe',
-        activation_link: 'https://example.com/activate/abc123',
+        user_name: 'SK',
+        activation_link: 'https://SK.com',
       },
       priority: NotificationPriority.HIGH,
       retryCount: 3,
