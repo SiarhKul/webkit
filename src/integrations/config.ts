@@ -40,6 +40,7 @@ const configSchema = z.object({
     .transform((val) => val === 'true')
     .pipe(z.boolean()),
   RABBITMQ_URL: z.string().optional(),
+  GRPC_URL: z.string().optional(),
 })
 
 export type Config = z.infer<typeof configSchema>
@@ -61,6 +62,7 @@ const parseConfig = () => {
       RABBITMQ_ENABLED: process.env.RABBITMQ_ENABLED ?? 'false',
       RABBITMQ_URL:
         process.env.RABBITMQ_URL ?? 'amqp://admin:admin@localhost:5672',
+      GRPC_URL: process.env.GRPC_URL ?? 'localhost:50051',
     }
     const variables = configSchema.parse(raw)
 

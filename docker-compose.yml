@@ -81,6 +81,7 @@ services:
       - LOKI_HOST=http://loki:3100
       - RABBITMQ_ENABLED=true
       - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+      - GRPC_URL=host.docker.internal:50051
       # Enable polling for file watching in Docker (Windows compatibility)
       - CHOKIDAR_USEPOLLING=true
       - CHOKIDAR_INTERVAL=1000

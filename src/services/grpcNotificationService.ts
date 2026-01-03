@@ -6,14 +6,15 @@ import {
   NotificationType,
   NotificationPriority,
 } from '../grpc/generated/notification.js'
+import { config } from '../integrations/config.js'
 
 export class GrpcNotificationService {
-  private GRPC_URL = 'localhost:50051'
   private client: NotificationServiceClient
 
   constructor() {
+    const grpcUrl = config.GRPC_URL ?? 'localhost:50051'
     this.client = new NotificationServiceClient(
-      this.GRPC_URL,
+      grpcUrl,
       credentials.createInsecure()
     )
   }
