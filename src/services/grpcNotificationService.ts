@@ -44,6 +44,7 @@ export class GrpcNotificationService {
         if (error) {
           reject(error)
         } else {
+          console.log('++++++', response)
           resolve(response)
         }
       })
