@@ -7,6 +7,7 @@ import {
   NotificationPriority,
 } from '../grpc/generated/notification.js'
 import { config } from '../integrations/config.js'
+import logger from '../integrations/logger.js'
 
 export class GrpcNotificationService {
   private client: NotificationServiceClient
@@ -44,7 +45,7 @@ export class GrpcNotificationService {
         if (error) {
           reject(error)
         } else {
-          console.log('++++++', response)
+          logger.info('gRPC Notification sent successfully: %o', response)
           resolve(response)
         }
       })
